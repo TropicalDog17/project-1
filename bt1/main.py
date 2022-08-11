@@ -2,8 +2,10 @@ import requests
 from bs4 import BeautifulSoup
 from utils.get_database import get_database
 from model.article import Article
-SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
+from time import sleep, perf_counter
 
+SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
+import threading
 #Connect to MongoDB Atlas
 try:
   get_database()
@@ -17,6 +19,7 @@ soup = BeautifulSoup(page.content, "html.parser")
 article_links = [item["href"] for item in soup.find_all('a', attrs={'data-medium': True})]
 
 # Article.objects().delete()
+start_time = perf_counter()
 
 #List chua cac link lap lai, do do su dung set de loai bo trung lap
 for i in list(set(article_links)): 
@@ -31,5 +34,8 @@ for i in list(set(article_links)):
 
     article = Article(title=article_title, content=article_content).save()
     #Lul
+end_time = perf_counter()
+print(f'It took {end_time- start_time: 0.2f} second(s) to complete.')
+
 
 
