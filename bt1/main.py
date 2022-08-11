@@ -30,5 +30,6 @@ for i in list(set(article_links)):
     article_content = article_soup.find("article", {"class": "fck_detail"}).get_text()
 
     article = Article(title=article_title, content=article_content).save()
+    #Lul
 
 
