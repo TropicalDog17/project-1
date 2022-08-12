@@ -4,8 +4,10 @@ import requests
 from bs4 import BeautifulSoup
 from utils.get_database import get_database
 from model.article import Article
-SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
 import threading
+
+
+SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
 from time import sleep, perf_counter
 #Connect to MongoDB Atlas
 def scrape_worker(article_links, start, end):
@@ -16,11 +18,12 @@ def scrape_worker(article_links, start, end):
     #Truy cap vao tung bai viet va trich xuat tieu de + noi dung
     article_page = requests.get(i)
     article_soup = BeautifulSoup(article_page.content, "html.parser")
+
     article_title = article_soup.find("h1",{"class": "title-detail"}).get_text()
-    article_content = article_soup.find("article", {"class": "fck_detail"}).get_text()
+    article_content = article_soup.find("article", {"class": "fck_detail"}).get_text().replace("\n", " ")
 
     article = Article(title=article_title, content=article_content).save()
-def multi_scrape(num_of_threads):
+def multi_threaded_scrape(num_of_threads):
   thread_list = [0]*num_of_threads
   len_l = len(article_links)
   for i in range(num_of_threads):
@@ -42,7 +45,7 @@ article_links = list(set(article_links)) #List chua cac link lap lai, do do su d
 start_time = perf_counter()
 
 # Article.objects().delete()
-multi_scrape(8)
+multi_threaded_scrape(8)
 print("Done!!!")
 end_time = perf_counter()
 print(f'It took {end_time- start_time: 0.2f} second(s) to complete.')
