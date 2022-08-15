@@ -5,13 +5,10 @@ from model.article import Article
 from time import sleep, perf_counter
 
 SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
+RETRY_LIMIT = 15 #After 15 second without connection, the scraping will stop
 
 #Connect to MongoDB Atlas
-try:
-  connect_database()
-except:
-  print("An exception occurred")
-  exit()
+connect_database()
 
 try:
     page = requests.get(SCRAPE_URL)
@@ -27,26 +24,22 @@ for i in list(set(article_links)):
     #Loai bo cac link rac khong thuoc VnExpress
     if(i.find("https://vnexpress.net") == -1):
         continue
-    flag = 1
-    RETRY_LIMIT = 15 #After 15 second without connection, the scraping will stop
+    file_downloaded = False
     retries = 0
     #Truy cap vao tung bai viet va trich xuat tieu de + noi dung
-    while(flag == 1 and retries < RETRY_LIMIT):
+    while(file_downloaded == False and retries < RETRY_LIMIT):
         try:
             article_page = requests.get(i, timeout=2)
-            try:
-                article_soup = BeautifulSoup(article_page.content, "html.parser")
-                article_title = article_soup.find("h1",{"class": "title-detail"}).get_text()
-                article_content = article_soup.find("article", {"class": "fck_detail"}).get_text()
-                article = Article(title=article_title, content=article_content).save()
-                flag = 0
-                if(retries != 0):
-                    retries = 0
-                    print("Resumed downloading...")
-            except Exception as e:
-                flag = 1
+            article_soup = BeautifulSoup(article_page.content, "html.parser")
+            article_title = article_soup.find("h1",{"class": "title-detail"}).get_text()
+            article_content = article_soup.find("article", {"class": "fck_detail"}).get_text()
+            article = Article(title=article_title, content=article_content).save()
+            file_downloaded = True
+            if(retries != 0):
+                retries = 0 
+                print("Resumed downloading...")
         except (requests.ConnectionError, requests.Timeout):
-            flag = 1
+            file_downloaded = False
             print(f"Network error. Attempting {retries} to resume downloading...")
             sleep(1)
             retries += 1
