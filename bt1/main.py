@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-from utils.get_database import get_database
+from utils.connect_database import connect_database
 from model.article import Article
 from time import sleep, perf_counter
 
