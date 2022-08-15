@@ -18,7 +18,6 @@ def scrape_worker(article_links, start, end):
     #Truy cap vao tung bai viet va trich xuat tieu de + noi dung
     article_page = requests.get(i)
     article_soup = BeautifulSoup(article_page.content, "html.parser")
-
     article_title = article_soup.find("h1",{"class": "title-detail"}).get_text()
     article_content = article_soup.find("article", {"class": "fck_detail"}).get_text().replace("\n", " ")
 
