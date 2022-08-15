@@ -9,5 +9,5 @@ from connect_database import connect_database
 def clear_collection(Model):
     Model.objects().delete()
 
-# connect_database()
-# clear_collection(Article)
+connect_database()
+clear_collection(Article)
