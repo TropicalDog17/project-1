@@ -13,8 +13,11 @@ def saving_article(collection, link, title, content,comments=[]):
         article = collection(link=link, title=title, content=content, comments=comments).save()
     elif not collection.objects(content=content):
         article = collection(link=link, title=title, content=content, comments=comments).save()
+    elif not collection.objects(comments=comments):
+        article = collection(link=link, title=title, content=content, comments=comments).save()
     else:
         return
+
 
 
 
