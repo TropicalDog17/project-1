@@ -45,10 +45,9 @@ def scrape_worker_new(article_links, start, end):
                 article_soup = BeautifulSoup(
                     article_page.content, "html.parser")
                 article_title = article_soup.find(
-                    "h1", {"class": "title-detail"}).get_text()
+                    "h1", "title-detail").get_text()
                 article_content = article_soup.find(
-                    "article", {"class": "fck_detail"}).get_text().replace("\n", " ")
-                article_comments = fetch_comment(i)
+                    "article", "fck_detail").get_text().replace("\n", " ")
                 saving_article(Article, i, article_title, article_content)
                 file_downloaded = True
                 if (retries != 0):
@@ -80,6 +79,7 @@ soup = BeautifulSoup(page.content, "html.parser")
 
 article_links = [item["href"]
                  for item in soup.find_all('a', attrs={'data-medium': True})]
+
 # List chua cac link lap lai, do do su dung set de loai bo trung lap
 article_links = list(set(article_links))
 
@@ -93,6 +93,9 @@ if __name__ == "__main__":
      duy tri chay trong thoi gian cho truoc(MAX_DURATION)"""
     while(timeout < MAX_DURATION):
       try:
+          for i in article_links:
+            if i.find("https://vnexpress.net") != -1:
+                print("'" + i + "'", end=",")
           start_time = perf_counter()
           multi_threaded_scrape(8)
           print("Done!!!")

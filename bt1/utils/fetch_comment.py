@@ -25,18 +25,15 @@ def add_colon(element):
 
 
 
-def fetch_comment(link):
+def fetch_comment(soup):
     """Fetches VNExpress' comments from VNExpress 
 
     Args: 
-        link: article link
+        soup: Beautiful Soup object of the article
     
     Returns:
-        A list of Comment documents 
+        A list of Comment documents(MongoEngine documents)
     """
-    r = session.get(link)
-    r.html.render(timeout=60)
-    soup = BeautifulSoup(r.html.html, "lxml")
     a = soup.find_all("p", "full_content")  # Normal comments
     # Very long comments have different html class
     b = soup.find_all("p", "content_more")
