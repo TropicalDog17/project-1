@@ -1,8 +1,7 @@
-from audioop import mul
-from concurrent.futures import thread
-from unicodedata import name
 import requests
 from bs4 import BeautifulSoup
+from requests_html import HTMLSession
+from utils.fetch_comment import *
 from utils.connect_database import connect_database
 from model.article import Article
 import threading
@@ -17,21 +16,21 @@ MAX_DURATION = 3600*24 #seconds
 
 
 def scrape_worker(article_links, start, end):
+    session = HTMLSession()
     for i in article_links[start:end]:
         # Loai bo cac link rac khong thuoc VnExpress
         if (i.find("https://vnexpress.net") == -1):
             continue
         # Truy cap vao tung bai viet va trich xuat tieu de + noi dung
-
-        article_page = requests.get(i)
-        article_soup = BeautifulSoup(article_page.content, "html.parser")
+        r = session.get(i)
+        r.html.render(timeout=60)
+        article_soup = BeautifulSoup(r.html.html, "lxml")
         article_title = article_soup.find(
             "h1", {"class": "title-detail"}).get_text()
         article_content = article_soup.find(
             "article", {"class": "fck_detail"}).get_text().replace("\n", " ")
-
         # article = Article(title=article_title, content=article_content).save()
-        saving_article(Article, article_title, article_content)
+        saving_article(Article, article_title, article_content, article_comments)
 
 
 def scrape_worker_new(article_links, start, end):
@@ -48,8 +47,9 @@ def scrape_worker_new(article_links, start, end):
                 article_title = article_soup.find(
                     "h1", {"class": "title-detail"}).get_text()
                 article_content = article_soup.find(
-                    "article", {"class": "fck_detail"}).get_text()
-                saving_article(Article, article_title, article_content)
+                    "article", {"class": "fck_detail"}).get_text().replace("\n", " ")
+                article_comments = fetch_comment(i)
+                saving_article(Article, i, article_title, article_content)
                 file_downloaded = True
                 if (retries != 0):
                     retries = 0
