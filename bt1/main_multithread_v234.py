@@ -13,6 +13,7 @@ SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
 RETRY_LIMIT = 15  # After 15 second without connection, the scraping will stop
 MAX_DURATION = 3600*24 #seconds
 # Connect to MongoDB Atlas
+connect_database()
 
 
 def scrape_worker(article_links, start, end):
@@ -30,9 +31,7 @@ def scrape_worker(article_links, start, end):
         article_content = article_soup.find(
             "article", {"class": "fck_detail"}).get_text().replace("\n", " ")
         # article = Article(title=article_title, content=article_content).save()
-        saving_article(Article, article_title, article_content, article_comments)
-
-
+        saving_article(Article, article_title, article_content)
 def scrape_worker_new(article_links, start, end):
     for i in article_links[start:end]:
         if (i.find("https://vnexpress.net") == -1):
@@ -58,8 +57,7 @@ def scrape_worker_new(article_links, start, end):
                 retries += 1
                 if (retries >= RETRY_LIMIT):
                     print("Can't connect to the internet. Exiting...")
-                    raise Exception
-
+                    sys.exit()
 
 def multi_threaded_scrape(num_of_threads):
     thread_list = [0]*num_of_threads
@@ -73,7 +71,6 @@ def multi_threaded_scrape(num_of_threads):
         thread_list[i].join()
 
 
-connect_database()
 page = requests.get(SCRAPE_URL)
 soup = BeautifulSoup(page.content, "html.parser")
 
@@ -93,9 +90,6 @@ if __name__ == "__main__":
      duy tri chay trong thoi gian cho truoc(MAX_DURATION)"""
     while(timeout < MAX_DURATION):
       try:
-          for i in article_links:
-            if i.find("https://vnexpress.net") != -1:
-                print("'" + i + "'", end=",")
           start_time = perf_counter()
           multi_threaded_scrape(8)
           print("Done!!!")

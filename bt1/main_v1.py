@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 from utils.connect_database import connect_database
 from model.article import Article
 from time import sleep, perf_counter
-
+from utils.saving_article import saving_article
+from utils.fetch_comment import fetch_comment
 SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
 RETRY_LIMIT = 15 #After 15 second without connection, the scraping will stop
 
@@ -33,7 +34,7 @@ for i in list(set(article_links)):
             article_soup = BeautifulSoup(article_page.content, "html.parser")
             article_title = article_soup.find("h1",{"class": "title-detail"}).get_text()
             article_content = article_soup.find("article", {"class": "fck_detail"}).get_text()
-            article = Article(title=article_title, content=article_content).save()
+            saving_article(Article, link=i, title=article_title, content=article_content)
             file_downloaded = True
             if(retries != 0):
                 retries = 0 
@@ -47,8 +48,6 @@ for i in list(set(article_links)):
                 print("Can't connect to the internet. Exiting...")
 
 
-    
-    
 end_time = perf_counter()
 print(f'It took {end_time- start_time: 0.2f} second(s) to complete.')
 

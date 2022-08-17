@@ -1,4 +1,4 @@
-from main_multithread import multi_threaded_scrape
+from main_multithread_v234 import multi_threaded_scrape
 from time import perf_counter
 
 for i in range(1,8):

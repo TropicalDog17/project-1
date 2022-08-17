@@ -6,11 +6,6 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from model.comment import Comment
-session = HTMLSession()
-
-
-
-
 
 
 def add_colon(element):

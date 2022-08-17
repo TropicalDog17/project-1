@@ -25,7 +25,6 @@ async def get_data():
         if(i[-5:] != ".html"):
             continue
         r = await asession.get(i)
-        print(i)
         await r.html.arender(timeout=60)
         article_soup = parse(r.html.html)
         article_title  = article_soup.find(
@@ -33,8 +32,10 @@ async def get_data():
         article_content = article_soup.find(
                     "article", "fck_detail").get_text().replace("\n", " ")
         article_comments = fetch_comment(article_soup)
-        print(article_title)
         saving_article(Article, i, article_title, article_content, comments=article_comments)
+
+
+
 if __name__ == "__main__":
     asession = AsyncHTMLSession()
     start_time = time.perf_counter()
