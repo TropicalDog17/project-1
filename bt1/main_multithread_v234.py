@@ -1,22 +1,19 @@
-import requests
-from bs4 import BeautifulSoup
-from requests_html import HTMLSession
-from utils.fetch_comment import *
-from utils.connect_database import connect_database
-from model.article import Article
-import threading
-import sys
-from time import sleep, perf_counter
-from utils.saving_article import saving_article
-import time
 import re
+import threading
+import time
+from time import sleep, perf_counter
+
+from model.article import Article
+from utils.connect_database import connect_database
+from utils.fetch_comment import *
+from utils.saving_article import saving_article
 
 SCRAPE_URL_LIST = [
     'https://vnexpress.net/tin-tuc/giao-duc-p' + str(i) for i in range(1, 21)]
 
 SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
 RETRY_LIMIT = 15  # After 15 second without connection, the scraping will stop
-MAX_DURATION = 3600*24  # seconds
+MAX_DURATION = 3600 * 24  # seconds
 # Connect to MongoDB Atlas
 connect_database()
 
@@ -25,7 +22,7 @@ def scrape_worker(article_links, start, end):
     session = HTMLSession()
     for i in article_links[start:end]:
         # Loai bo cac link rac khong thuoc VnExpress
-        if (i.find("https://vnexpress.net") == -1):
+        if i.find("https://vnexpress.net") == -1:
             continue
         # Truy cap vao tung bai viet va trich xuat tieu de + noi dung
         r = session.get(i)
@@ -38,6 +35,7 @@ def scrape_worker(article_links, start, end):
         # article = Article(title=article_title, content=article_content).save()
         saving_article(Article, article_title, article_content)
 
+
 def scrape_worker_new(scrape_url, start, end):
     page = requests.get(scrape_url)
     soup = BeautifulSoup(page.content, "html.parser")
@@ -46,11 +44,11 @@ def scrape_worker_new(scrape_url, start, end):
     article_links = list(set(article_links))
     count = 0
     for i in article_links[start:end]:
-        if (i[-5:] != ".html"):
+        if i[-5:] != ".html":
             continue
         file_downloaded = False
         retries = 0
-        while (file_downloaded == False and retries < RETRY_LIMIT):
+        while file_downloaded is False and retries < RETRY_LIMIT:
             try:
                 article_page = requests.get(i, timeout=2)
                 article_soup = BeautifulSoup(
@@ -62,13 +60,13 @@ def scrape_worker_new(scrape_url, start, end):
                 saving_article(Article, i, article_title, article_content)
                 count += 1
                 file_downloaded = True
-                if (retries != 0):
+                if retries != 0:
                     retries = 0
             except (requests.ConnectionError, requests.Timeout):
                 file_downloaded = False
                 sleep(1)
                 retries += 1
-                if (retries >= RETRY_LIMIT):
+                if retries >= RETRY_LIMIT:
                     print("Can't connect to the internet. Exiting...")
                     sys.exit()
             except Exception as e:
@@ -77,12 +75,12 @@ def scrape_worker_new(scrape_url, start, end):
 
 
 def multi_threaded_scrape(num_of_threads, article_links):
-    thread_list = [0]*num_of_threads
+    thread_list = [0] * num_of_threads
     len_l = len(article_links)
 
     for i in range(num_of_threads):
         thread_list[i] = threading.Thread(target=scrape_worker_new, args=(
-            article_links, len_l*i//num_of_threads, len_l*(i+1)//num_of_threads))
+            article_links, len_l * i // num_of_threads, len_l * (i + 1) // num_of_threads))
         thread_list[i].start()
     for i in range(num_of_threads):
         thread_list[i].join()
@@ -95,16 +93,16 @@ if __name__ == "__main__":
 
     """Scrape lai du lieu sau moi khoang thoi gian nhat dinh,
      duy tri chay trong thoi gian cho truoc(MAX_DURATION)"""
-    page = int(input("Nhap so trang muon scrape"))
-    while (timeout < MAX_DURATION):
+    index = int(input("Nhap so trang muon scrape"))
+    while timeout < MAX_DURATION:
         try:
             start_time = perf_counter()
-            for i in range(0, page):
+            for i in range(0, index):
                 multi_threaded_scrape(8, SCRAPE_URL_LIST[i])
             print("Done!!!")
             end_time = perf_counter()
             print(
-                f'It took {end_time- start_time: 0.2f} second(s) to complete.')
+                f'It took {end_time - start_time: 0.2f} second(s) to complete.')
             time.sleep(60)
             timeout += 60
         except Exception as e:

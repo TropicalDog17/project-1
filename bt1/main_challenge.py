@@ -9,49 +9,54 @@ from utils.fetch_comment import fetch_comment
 from utils.print_time_elapsed import *
 import time
 import re
+SCRAPE_URL_LIST = [
+    'https://vnexpress.net/tin-tuc/giao-duc-p' + str(i) for i in range(1, 21)]
 SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
 connect_database()
+
+
 def parse(html):
     soup = BeautifulSoup(html, "lxml")
     return soup
+
+
 tasks = []
 
-async def get_data():
+
+async def get_data(i):
     loop = asyncio.get_event_loop()
     r = await asession.get(SCRAPE_URL)
     await r.html.arender(timeout=60)
 
     soup = parse(r.html.html)
     article_links = [item["href"]
-                for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
+                     for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
     article_links = list(set(article_links))
-        
+
     for i in article_links:
-        if(i[-5:] != ".html"):
+        if i[-5:] != ".html":
             continue
         r = await asession.get(i)
-        await r.html.arender(timeout = 60)
+        await r.html.arender(timeout=60)
         article_soup = parse(r.html.html)
-        article_title  = article_soup.find(
-                        "h1", "title-detail").get_text()
+        article_title = article_soup.find(
+            "h1", "title-detail").get_text()
         print(article_title)
         article_content = article_soup.find(
-                        "article", "fck_detail").get_text().replace("\n", " ")
+            "article", "fck_detail").get_text().replace("\n", " ")
         article_comments = fetch_comment(article_soup)
-        print(article_comments)
         saving_article(Article, i, article_title, article_content, comments=article_comments)
-        
-
 
 
 if __name__ == "__main__":
     asession = AsyncHTMLSession()
+    tasks = []
+    index =
     try:
-        start_time = time.perf_counter()
+        start_time = time.perf_counter(
+        for i in range(0, )
         asession.run(get_data)
         end_time = time.perf_counter()
-        print(f'It took {end_time- start_time: 0.2f} second(s) to complete.')
+        print(f'It took {end_time - start_time: 0.2f} second(s) to complete.')
     except:
-        pass #Ugly workaround
-
-        
+        pass  # Ugly workaround

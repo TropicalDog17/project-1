@@ -8,6 +8,7 @@ from requests_html import HTMLSession
 from model.comment import Comment
 import requests
 
+
 def add_colon(element):
     """
     Each comment element contain 2 part: User element and Text content, 
@@ -17,7 +18,6 @@ def add_colon(element):
         '<span class="additional-content">: </span>', 'html.parser')
     element.insert(1, extraSoup.span)
     return element
-
 
 
 def fetch_comment(soup):
@@ -39,10 +39,12 @@ def fetch_comment(soup):
         comment = Comment(user=element_content[:colon_index], content=element_content[colon_index:])
         result.append(comment)
     return result
+
+
 if __name__ == "__main__":
     session = HTMLSession()
     r = session.get("https://vnexpress.net/hon-3-600-giao-vien-ha-noi-duoc-hoc-ielts-4499712.html")
-    r.html.render(timeout = 60)
+    r.html.render(timeout=60)
     soup = BeautifulSoup(r.html.html, "lxml")
     result = fetch_comment(soup)
     user = [comment.user for comment in result]
