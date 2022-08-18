@@ -71,6 +71,8 @@ def scrape_worker_new(scrape_url, start, end):
                 if (retries >= RETRY_LIMIT):
                     print("Can't connect to the internet. Exiting...")
                     sys.exit()
+            except Exception as e:
+                print(e)
     print(count)
 
 
@@ -94,7 +96,7 @@ if __name__ == "__main__":
     """Scrape lai du lieu sau moi khoang thoi gian nhat dinh,
      duy tri chay trong thoi gian cho truoc(MAX_DURATION)"""
     page = int(input("Nhap so trang muon scrape"))
-    while (timeout < 1):
+    while (timeout < MAX_DURATION):
         try:
             start_time = perf_counter()
             for i in range(0, page):
@@ -103,9 +105,8 @@ if __name__ == "__main__":
             end_time = perf_counter()
             print(
                 f'It took {end_time- start_time: 0.2f} second(s) to complete.')
-            # time.sleep(60)
-            # timeout += 60
-            timeout = 1
+            time.sleep(60)
+            timeout += 60
         except Exception as e:
             print(e)
             sys.exit("Exception")

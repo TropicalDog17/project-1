@@ -30,9 +30,9 @@ async def get_data(asession,i):
             sys.exit()
         print(i)
         r = await asession.get(SCRAPE_URL_LIST[i])
-        r = await r.read()
+        await r.html.arender(timeout=60)
         # await r.html.arender(timeout=60)
-        soup = parse(r)
+        soup = parse(r.html.html)
         article_links = [item["href"]
                 for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
         article_links = list(set(article_links))
@@ -47,8 +47,8 @@ async def get_data(asession,i):
                     file_downloaded = False
                     r = await asession.get(i)
                     # await r.html.arender(timeout=60)
-                    r = await r.read()
-                    article_soup = parse(r)
+                    await r.html.arender(timeout = 60)
+                    article_soup = parse(r.html.html)
                     print(i)
                     article_title  = article_soup.find(
                                 "h1", re.compile("title[\S]*")).get_text()
@@ -60,8 +60,12 @@ async def get_data(asession,i):
                     
                     file_downloaded = True
                     count += 1
+                    if(retries != 0):
+                        retries = 0 
+                        print("Resumed downloading...")
                 except (requests.ConnectionError, requests.Timeout):
                     file_downloaded = False
+                    print(f"Network error. Attempting {retries} to resume downloading...")
                     time.sleep(1)
                     retries += 1
                     if (retries >= RETRY_LIMIT):
@@ -69,7 +73,12 @@ async def get_data(asession,i):
                         sys.exit()
         print(count)
     except (requests.ConnectionError, requests.Timeout) as e:
-        print(e)
+        file_downloaded = False
+        print(f"Network error. Attempting {retries} to resume downloading...")
+        time.sleep(1)
+        retries += 1
+        if(retries >= RETRY_LIMIT):
+            print("Can't connect to the internet. Exiting...")
 
 
 async def main():
