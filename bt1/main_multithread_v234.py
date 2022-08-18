@@ -38,17 +38,16 @@ def scrape_worker(article_links, start, end):
         # article = Article(title=article_title, content=article_content).save()
         saving_article(Article, article_title, article_content)
 
-
 def scrape_worker_new(scrape_url, start, end):
     page = requests.get(scrape_url)
     soup = BeautifulSoup(page.content, "html.parser")
     article_links = [item["href"]
-                 for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
+                     for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
     article_links = list(set(article_links))
-
+    count = 0
     for i in article_links[start:end]:
-        if(i[-5:] != ".html"):
-                continue
+        if (i[-5:] != ".html"):
+            continue
         file_downloaded = False
         retries = 0
         while (file_downloaded == False and retries < RETRY_LIMIT):
@@ -61,6 +60,7 @@ def scrape_worker_new(scrape_url, start, end):
                 article_content = article_soup.find(
                     "article", "fck_detail").get_text().replace("\n", " ")
                 saving_article(Article, i, article_title, article_content)
+                count += 1
                 file_downloaded = True
                 if (retries != 0):
                     retries = 0
@@ -71,12 +71,13 @@ def scrape_worker_new(scrape_url, start, end):
                 if (retries >= RETRY_LIMIT):
                     print("Can't connect to the internet. Exiting...")
                     sys.exit()
+    print(count)
 
 
 def multi_threaded_scrape(num_of_threads, article_links):
     thread_list = [0]*num_of_threads
     len_l = len(article_links)
-    
+
     for i in range(num_of_threads):
         thread_list[i] = threading.Thread(target=scrape_worker_new, args=(
             article_links, len_l*i//num_of_threads, len_l*(i+1)//num_of_threads))
@@ -85,13 +86,7 @@ def multi_threaded_scrape(num_of_threads, article_links):
         thread_list[i].join()
 
 
-
-
-
-
 # List chua cac link lap lai, do do su dung set de loai bo trung lap
-
-
 if __name__ == "__main__":
     # Article.objects().delete()
     timeout = 0
@@ -106,7 +101,8 @@ if __name__ == "__main__":
                 multi_threaded_scrape(8, SCRAPE_URL_LIST[i])
             print("Done!!!")
             end_time = perf_counter()
-            print(f'It took {end_time- start_time: 0.2f} second(s) to complete.')
+            print(
+                f'It took {end_time- start_time: 0.2f} second(s) to complete.')
             # time.sleep(60)
             # timeout += 60
             timeout = 1

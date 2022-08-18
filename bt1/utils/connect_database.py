@@ -1,7 +1,7 @@
 from pkgutil import get_data
 from dotenv import load_dotenv
 import os
-load_dotenv("/home/fosec/Tropical/python/training_python_exercises/bt1aa/.env")
+load_dotenv("/home/fosec/Tropical/python/training_python_exercises/bt1/.env")
 def connect_database():
     from mongoengine import connect
     DB_URI = os.environ.get("DB_URI")

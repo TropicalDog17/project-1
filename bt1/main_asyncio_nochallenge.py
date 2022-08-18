@@ -6,7 +6,7 @@ from requests_html import *
 from utils.saving_article import saving_article
 from utils.connect_database import connect_database
 from utils.fetch_comment import fetch_comment
-from utils.print_time_elapsed import print_time_elapsed
+from utils.print_time_elapsed import *
 import time
 import re
 import os

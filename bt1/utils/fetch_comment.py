@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(SCRIPT_DIR))
 from bs4 import BeautifulSoup
 from requests_html import HTMLSession
 from model.comment import Comment
-
+import requests
 
 def add_colon(element):
     """
@@ -40,6 +40,10 @@ def fetch_comment(soup):
         result.append(comment)
     return result
 if __name__ == "__main__":
-    result = fetch_comment("https://vnexpress.net/hoc-sinh-lop-10-trut-ganh-nang-chon-to-hop-4499373.html")
-    for comment in result:
-        print(comment.user)
+    session = HTMLSession()
+    r = session.get("https://vnexpress.net/hon-3-600-giao-vien-ha-noi-duoc-hoc-ielts-4499712.html")
+    r.html.render(timeout = 60)
+    soup = BeautifulSoup(r.html.html, "lxml")
+    result = fetch_comment(soup)
+    user = [comment.user for comment in result]
+    print(user)
