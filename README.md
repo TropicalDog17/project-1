@@ -1,4 +1,11 @@
-Bài tập 1
+**Bài tập 1**
+
+Tạo 1 file .env trong thư mục bt1 với nội dung: 
+
+
+    DB_URI = "mongodb+srv://tropicaldog17:tropical@file-sharing-tropical.lzoqe.mongodb.net/test?retryWrites=true&w=majority"
+
+
 Các thư viện sử dụng 
 
     aiohttp==3.8.1
