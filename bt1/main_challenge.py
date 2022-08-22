@@ -25,7 +25,7 @@ tasks = []
 
 async def get_data(i):
     loop = asyncio.get_event_loop()
-    r = await asession.get(SCRAPE_URL)
+    r = await asession.get(SCRAPE_URL_LIST[i])
     await r.html.arender(timeout=60)
 
     soup = parse(r.html.html)
@@ -50,12 +50,13 @@ async def get_data(i):
 
 if __name__ == "__main__":
     asession = AsyncHTMLSession()
+    page = int(input("Please enter page number: "))
     tasks = []
-    index =
     try:
-        start_time = time.perf_counter(
-        for i in range(0, )
-        asession.run(get_data)
+        start_time = time.perf_counter()
+        for i in range(0, page):
+            tasks.append(asyncio.create_task(get_data(i)))
+        asyncio.gather(*tasks)
         end_time = time.perf_counter()
         print(f'It took {end_time - start_time: 0.2f} second(s) to complete.')
     except:

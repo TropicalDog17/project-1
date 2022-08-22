@@ -2,7 +2,7 @@ import re
 import threading
 import time
 from time import sleep, perf_counter
-
+from requests_html import HTMLSession
 from model.article import Article
 from utils.connect_database import connect_database
 from utils.fetch_comment import *
