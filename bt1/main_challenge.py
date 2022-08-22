@@ -9,6 +9,7 @@ from utils.fetch_comment import fetch_comment
 from utils.print_time_elapsed import *
 import time
 import re
+
 SCRAPE_URL_LIST = [
     'https://vnexpress.net/tin-tuc/giao-duc-p' + str(i) for i in range(1, 21)]
 SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
@@ -20,18 +21,14 @@ def parse(html):
     return soup
 
 
-tasks = []
-
-
-async def get_data(i):
-    loop = asyncio.get_event_loop()
+async def get_data(asession, i):
     r = await asession.get(SCRAPE_URL_LIST[i])
     await r.html.arender(timeout=60)
 
     soup = parse(r.html.html)
-    article_links = [item["href"]
-                     for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
-    article_links = list(set(article_links))
+    article_links_duplicated = [item["href"]
+                                for item in soup.find_all("a", attrs={"href": re.compile("^https://vnexpress.net")})]
+    article_links = list(set(article_links_duplicated))
 
     for i in article_links:
         if i[-5:] != ".html":
@@ -41,6 +38,7 @@ async def get_data(i):
         article_soup = parse(r.html.html)
         article_title = article_soup.find(
             "h1", "title-detail").get_text()
+        print(i)
         print(article_title)
         article_content = article_soup.find(
             "article", "fck_detail").get_text().replace("\n", " ")
@@ -48,16 +46,21 @@ async def get_data(i):
         saving_article(Article, i, article_title, article_content, comments=article_comments)
 
 
-if __name__ == "__main__":
+async def main():
     asession = AsyncHTMLSession()
     page = int(input("Please enter page number: "))
     tasks = []
     try:
         start_time = time.perf_counter()
         for i in range(0, page):
-            tasks.append(asyncio.create_task(get_data(i)))
-        asyncio.gather(*tasks)
+            tasks.append(asyncio.create_task(get_data(asession, i)))
+        await asyncio.gather(*tasks)
         end_time = time.perf_counter()
         print(f'It took {end_time - start_time: 0.2f} second(s) to complete.')
-    except:
+    except Exception as e:
+        print(e)
         pass  # Ugly workaround
+
+
+if __name__ == "__main__":
+    asyncio.run(main())

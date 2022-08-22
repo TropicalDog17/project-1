@@ -16,5 +16,3 @@ def saving_article(collection, link, title, content,comments=[]):
 
 
 
-
-    

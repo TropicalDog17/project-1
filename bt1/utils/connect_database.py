@@ -14,5 +14,5 @@ def connect_database():
 try:
     connect_database()
 except Exception as e:
-    # print(e)
+    print(e)
     raise SystemExit('Error: Can\'t connect to the database')

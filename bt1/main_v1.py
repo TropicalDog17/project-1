@@ -47,7 +47,7 @@ for index in range(0, page):
                 print(article_title)
                 article_content = article_soup.find("article", {"class": "fck_detail"}).get_text()
                 article_comment = fetch_comment(article_soup)
-                print(article_comment)
+                # print(article_comment)
                 saving_article(Article, link=i, title=article_title, content=article_content ,comments=article_comment)
                 file_downloaded = True
                 if retries != 0:
