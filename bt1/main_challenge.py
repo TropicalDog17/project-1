@@ -9,6 +9,7 @@ from utils.fetch_comment import fetch_comment
 from utils.print_time_elapsed import *
 import time
 import re
+
 SCRAPE_URL_LIST = [
     'https://vnexpress.net/tin-tuc/giao-duc-p' + str(i) for i in range(1, 21)]
 SCRAPE_URL = 'https://vnexpress.net/tin-tuc/giao-duc'
@@ -20,10 +21,9 @@ def parse(html):
     return soup
 
 
-tasks = []
 
 
-async def get_data(i):
+async def get_data(asession, i):
     loop = asyncio.get_event_loop()
     r = await asession.get(SCRAPE_URL)
     await r.html.arender(timeout=60)
@@ -41,22 +41,27 @@ async def get_data(i):
         article_soup = parse(r.html.html)
         article_title = article_soup.find(
             "h1", "title-detail").get_text()
-        print(article_title)
         article_content = article_soup.find(
             "article", "fck_detail").get_text().replace("\n", " ")
         article_comments = fetch_comment(article_soup)
         saving_article(Article, i, article_title, article_content, comments=article_comments)
 
 
-if __name__ == "__main__":
+async def main():
     asession = AsyncHTMLSession()
     tasks = []
-    index =
+    index = int(input("Please enter number of pages: "))
     try:
-        start_time = time.perf_counter(
-        for i in range(0, )
-        asession.run(get_data)
+        start_time = time.perf_counter()
+        for i in range(0, index):
+            tasks.append(asyncio.create_task(get_data(asession, SCRAPE_URL_LIST[i])))
+        await asyncio.gather(*tasks)
         end_time = time.perf_counter()
         print(f'It took {end_time - start_time: 0.2f} second(s) to complete.')
-    except:
+    except Exception as e:
+        print(e)
         pass  # Ugly workaround
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
