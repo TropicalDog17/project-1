@@ -40,6 +40,7 @@ Cài đặt các packages cần thiết
     pip install -r requirements.txt
 
 Khởi tạo SQLite DB
+
     flask --app api init-db
 
 Khởi chạy ứng dụng
