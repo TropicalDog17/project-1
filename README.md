@@ -20,3 +20,30 @@ File mainv1: Đã cài đặt được tính năng scrape dữ liệu, chạy l�
 File mainv234: Cài đặt được tính năng đa luồng(Giảm thời gian chạy), tuy nhiên không lấy được comment do không tương thích.
 
 File main_challenge: Cài đặt được đa luồng và lấy được comment.
+
+# Bài tập 2
+
+## Cài đặt
+
+Clone về máy:
+
+    git clone git@gitlab.com:tuantran_1702/training_exercise.git
+
+Tạo và kích hoạt môi trường ảo
+
+    cd bt2
+    python3 -m venv env
+    source env/bin/activate/
+
+Cài đặt các packages cần thiết
+
+    pip install -r requirements.txt
+
+Khởi tạo SQLite DB
+    flask --app api init-db
+
+Khởi chạy ứng dụng
+
+    flask --app api --debug run
+
+
