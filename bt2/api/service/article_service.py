@@ -23,7 +23,7 @@ def get_articles_pagination(db,data):
             raise Exception
 
         result = []
-        offset = limit * page
+        offset = limit * (page - 1)
         rows = db.execute(f'SELECT * FROM article LIMIT {limit} OFFSET {offset}').fetchall()
         for row in rows:
             result.append(retrieve_sql_row_data(row, "id", "link", "title", "content"))
@@ -62,12 +62,14 @@ def insert_one_article(db, data):
 
         row = db.execute('''INSERT INTO article (link, title,content) VALUES (?, ?, ?)''', (link, title, content))
         db.commit()
-        return {'id': row.lastrowid, 'link': link, 'title': title, content: 'content'}
     except Exception as e:
         if not link:
             raise ValueError("Please provide link")
-        if not title:
+        elif not title:
             raise ValueError("Please provide title")
-        if not content:
+        elif not content:
             raise ValueError("Please provide content")
+        else:
+            print(e)
         raise Exception
+    return {'id': row.lastrowid, 'link': link, 'title': title, content: 'content'}

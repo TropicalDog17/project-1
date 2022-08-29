@@ -8,7 +8,7 @@ def get_article_by_title(db, query):
             raise Exception
         elif len(query) > 255:
             raise Exception
-        rows = db.execute(f'SELECT * FROM article WHERE title LIKE "%{query}%"').fetchall()
+        rows = db.execute(f"SELECT * FROM article WHERE title LIKE '%{query}%'").fetchall()
         for row in rows:
             result.append(retrieve_sql_row_data(row, 'link', 'title', 'content'))
     except Exception as e:
@@ -16,5 +16,6 @@ def get_article_by_title(db, query):
             raise ValueError("Query must not be null")
         elif len(query) > 255:
             raise ValueError(f"Maximum length exceeded ({len(query)} characters) ")
+        print(e)
         raise Exception
     return result

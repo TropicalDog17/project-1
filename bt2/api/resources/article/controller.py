@@ -39,8 +39,8 @@ class ArticleList(Resource):
             pass
         except Exception as e:
             print(e)
-            return {"message": "Unexpected error"}
-        return {"message": "Article added successfully", "data": result}
+            return {"message": "Unexpected error"}, 400
+        return {"message": "Article added successfully", "data": result}, 200
 
 
 class ArticleOne(Resource):

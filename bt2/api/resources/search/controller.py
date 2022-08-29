@@ -17,5 +17,6 @@ class ArticleSearchByTitle(Resource):
         except ValueError as e:
             return {"message": f"{e}"}, 404
         except Exception as e:
+            print(e)
             return {"message": f"{e}"}, 400
-        return {"message": result}, 200
+        return {"message": "OK", "data": result}, 200
