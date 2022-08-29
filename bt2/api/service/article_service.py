@@ -8,6 +8,7 @@ def get_all_articles(db):
         for row in rows:
             result.append(retrieve_sql_row_data(row, "id", "link", "title", "content"))
     except Exception as e:
+        print(e)
         raise Exception("Unexpected error")
     return result
 
@@ -39,6 +40,7 @@ def get_one_article(db, article_id):
         if type(article_id) is not int:
             raise Exception
         row = db.execute(f'SELECT * FROM article WHERE id={article_id}').fetchone()
+
         result = retrieve_sql_row_data(row, "id", "link", "title", "content")
         if row is None:
             raise Exception
