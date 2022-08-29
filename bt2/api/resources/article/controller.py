@@ -1,4 +1,4 @@
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Resource, reqparse
 from api.db import get_db
 from api.service.article_service import get_all_articles, get_articles_pagination, get_one_article, insert_one_article
 

@@ -1,4 +1,4 @@
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Resource, reqparse
 
 from api.db import get_db
 from api.service.search_service import get_article_by_title

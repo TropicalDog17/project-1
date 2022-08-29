@@ -35,20 +35,22 @@ def get_articles_pagination(db,data):
 
 def get_one_article(db, article_id):
     result = {}
+    cursor = db.cursor()
     try:
         article_id = int(article_id)
         if type(article_id) is not int:
             raise Exception
-        row = db.execute(f'SELECT * FROM article WHERE id={article_id}').fetchone()
-
+        print(cursor)
+        cursor.execute(f'SELECT * FROM article WHERE id={article_id}')
+        row = cursor.fetchone()
         result = retrieve_sql_row_data(row, "id", "link", "title", "content")
-        if row is None:
+        if cursor.rowcount == 0:
             raise Exception
     except Exception as e:
         if type(article_id) is not int:
             raise TypeError("Please provide an integer")
-        elif row is None:
-            raise ValueError("Article not found")
+        print(e)
+        raise ValueError("Article not found")
     return result
 
 
