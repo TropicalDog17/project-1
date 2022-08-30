@@ -2,6 +2,8 @@ import os
 
 from flask import Flask
 
+from api.resources import auth
+
 
 def create_app(test_config=None):
     # create and configure the app
@@ -30,6 +32,7 @@ def create_app(test_config=None):
     from api.resources import article, search
     app.register_blueprint(article.article_bp, url_prefix="/api")
     app.register_blueprint(search.search_bp, url_prefix="/api")
+    app.register_blueprint(auth.auth_bp, url_prefix="/api")
     return app
 
 #

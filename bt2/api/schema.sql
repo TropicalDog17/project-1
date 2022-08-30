@@ -1,7 +1,6 @@
-DROP TABLE IF EXISTS article;
-DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS user;
 
-CREATE TABLE article (
+CREATE TABLE IF NOT EXISTS article (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   link TEXT UNIQUE NOT NULL,
   title TEXT UNIQUE NOT NULL,
@@ -9,10 +8,8 @@ CREATE TABLE article (
 
 );
 
-CREATE TABLE comment (
-  post_id INTEGER PRIMARY KEY AUTOINCREMENT,
-  author_name TEXT NOT NULL,
-  content TEXT NOT NULL,
-  article_id INTEGER NOT NULL,
-  FOREIGN KEY (article_id) REFERENCES article (article_id)
+CREATE TABLE user (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  email text UNIQUE  NOT NULL,
+  password text UNIQUE NOT NULL,
 );

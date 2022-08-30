@@ -24,3 +24,6 @@ def retrieve_sql_row_data(row, *args) -> object:
 def check_if_article_exists(db, article_id):
     c = db.cursor()
     return c.execute("SELECT count(*) FROM article WHERE id=?", (article_id,)).fetchone()[0] > 0
+def check_if_user_exists(db, email):
+    c = db.cursor()
+    return c.execute("SELECT count(*) FROM user WHERE email=?", (email,)).fetchone()[0] > 0
