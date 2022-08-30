@@ -19,3 +19,8 @@ def retrieve_sql_row_data(row, *args) -> object:
     for arg in args:
         result[arg] = row[arg]
     return result
+
+
+def check_if_article_exists(db, article_id):
+    c = db.cursor()
+    return c.execute("SELECT count(*) FROM article WHERE id=?", (article_id,)).fetchone()[0] > 0

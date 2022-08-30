@@ -1,8 +1,10 @@
+import traceback
+
 from flask_restful import Resource, reqparse, output_json
 from api.db import get_db
-from api.service.article_service import get_all_articles, get_articles_pagination, get_one_article, insert_one_article
+from api.service.article_service import get_all_articles, get_articles_pagination, get_one_article, insert_one_article, \
+    delete_one_article
 from flask import jsonify
-
 
 
 class ArticleList(Resource):
@@ -57,3 +59,17 @@ class ArticleOne(Resource):
         except Exception as e:
             return {"message": f'{e}'}, 400
         return {'data': result}
+
+    def delete(self, article_id):
+        parser = reqparse.RequestParser(bundle_errors=True)
+        parser.add_argument('id', type=int, help="Please enter article id", location='args')
+        db = get_db()
+        data = parser.parse_args()
+        try:
+            result = delete_one_article(db, article_id)
+        except ValueError as ve:
+            return {"message": str(ve)}, 404
+        except Exception as e:
+            print(traceback.print_exc())
+            return {"message": str(e)}, 400
+        return {"data": result}, 200

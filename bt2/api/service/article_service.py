@@ -1,4 +1,4 @@
-from api.common.util import retrieve_sql_row_data
+from api.common.util import retrieve_sql_row_data, check_if_article_exists
 from operator import itemgetter
 
 def get_all_articles(db):
@@ -40,7 +40,6 @@ def get_one_article(db, article_id):
         article_id = int(article_id)
         if type(article_id) is not int:
             raise Exception
-        print(cursor)
         cursor.execute(f'SELECT * FROM article WHERE id={article_id}')
         row = cursor.fetchone()
         result = retrieve_sql_row_data(row, "id", "link", "title", "content")
@@ -74,3 +73,25 @@ def insert_one_article(db, data):
             print(e)
         raise Exception
     return {'id': row.lastrowid, 'link': link, 'title': title, content: 'content'}
+
+
+def delete_one_article(db, data):
+    article_id = data
+    cursor = db.cursor()
+    try:
+        if not article_id:
+            raise ValueError
+        article_id = int(article_id)
+        if type(article_id) is not int:
+            raise Exception()
+        if check_if_article_exists(db, article_id):
+            cursor.execute(f'DELETE FROM article WHERE id={article_id}')
+            db.commit()
+        else:
+            raise ValueError
+    except ValueError as ve:
+        if not check_if_article_exists(db, article_id):
+            raise ValueError("Article not found")
+        raise ValueError("Please provide article id")
+    except Exception as e:
+        raise Exception("Unexpected error")
