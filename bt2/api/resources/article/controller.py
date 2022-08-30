@@ -3,7 +3,7 @@ import traceback
 from flask_restful import Resource, reqparse, output_json
 from api.db import get_db
 from api.service.article_service import get_all_articles, get_articles_pagination, get_one_article, insert_one_article, \
-    delete_one_article
+    delete_one_article, update_one_article
 from flask import jsonify
 
 
@@ -35,7 +35,6 @@ class ArticleList(Resource):
         parser.add_argument('content', type=str, help="Please enter article content", location='json')
         db = get_db()
         data = parser.parse_args()
-        db = get_db()
         try:
             result = insert_one_article(db, data)
             pass
@@ -61,10 +60,7 @@ class ArticleOne(Resource):
         return {'data': result}
 
     def delete(self, article_id):
-        parser = reqparse.RequestParser(bundle_errors=True)
-        parser.add_argument('id', type=int, help="Please enter article id", location='args')
         db = get_db()
-        data = parser.parse_args()
         try:
             result = delete_one_article(db, article_id)
         except ValueError as ve:
@@ -73,3 +69,19 @@ class ArticleOne(Resource):
             print(traceback.print_exc())
             return {"message": str(e)}, 400
         return {"data": result}, 200
+
+    def put(self, article_id):
+        parser = reqparse.RequestParser(bundle_errors=True)
+        parser.add_argument('link', type=str, help="Please enter link", location='json')
+        parser.add_argument('title', type=str, help="Please enter title", location='json')
+        parser.add_argument('content', type=str, help="Please enter content", location='json')
+        db = get_db()
+        data = parser.parse_args()
+        try:
+            result = update_one_article(db, article_id, data)
+        except ValueError as ve:
+            return {"message": str(ve)}, 404
+        except Exception as e:
+            print(traceback.print_exc())
+            return {"message": str(e)}, 400
+        return {"message":"Update successfully", "data": result}, 200

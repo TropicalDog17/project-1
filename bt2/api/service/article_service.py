@@ -95,3 +95,35 @@ def delete_one_article(db, data):
         raise ValueError("Please provide article id")
     except Exception as e:
         raise Exception("Unexpected error")
+
+
+def update_one_article(db, article_id, data):
+    link, title, content = itemgetter('link', 'title', 'content')(data)
+    cursor = db.cursor()
+    try:
+        if not article_id:
+            raise ValueError
+        article_id = int(article_id)
+        if type(article_id) is not int:
+            raise Exception
+        if not link or not title or not content:
+            raise Exception
+        if not check_if_article_exists(db, article_id):
+            raise ValueError
+        cursor.execute('UPDATE article SET link=(?), title=(?), content=(?) WHERE id=(?)', (link, title, content, article_id))
+
+        db.commit()
+    except ValueError as ve:
+        if not check_if_article_exists(db, article_id):
+            raise ValueError("Article not found")
+        raise ValueError("Please provide article id")
+    except Exception as e:
+        if not link:
+            raise ValueError("Please provide link")
+        elif not title:
+            raise ValueError("Please provide title")
+        elif not content:
+            raise ValueError("Please provide content")
+        else:
+            raise e
+    return {"id": article_id, "link": link, "title": title, "content": content}

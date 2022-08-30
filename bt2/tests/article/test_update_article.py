@@ -5,9 +5,9 @@ def test_update_exist_article(test_client):
     random_link = shortuuid.uuid() + "example.com"
     random_title = shortuuid.uuid()
     data = {
-        "link": random_link, "title":random_title, "content": "fssdfsfsdfc"
+        "link": random_link, "title": random_title, "content": "fssdfsfsdfc"
     }
-    response = test_client.delete(f"api/articles/1")
+    response = test_client.put(f"api/articles/2", json=data, headers={"Content-Type": "application/json", "Accept": "application/json"}, )
     assert response.status_code == 200
 
 
