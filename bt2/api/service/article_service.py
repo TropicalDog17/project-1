@@ -56,6 +56,7 @@ def get_one_article(db, article_id):
 
 def insert_one_article(db, data):
     link, title, content = itemgetter('link', 'title', 'content')(data)
+    print(data)
     try:
         if not link or not title or not content:
             raise Exception

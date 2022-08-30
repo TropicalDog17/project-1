@@ -1,6 +1,8 @@
-from flask_restful import Resource, reqparse
+from flask_restful import Resource, reqparse, output_json
 from api.db import get_db
 from api.service.article_service import get_all_articles, get_articles_pagination, get_one_article, insert_one_article
+from flask import jsonify
+
 
 
 class ArticleList(Resource):
@@ -24,23 +26,20 @@ class ArticleList(Resource):
             return {"message": f'{e}'}, 400
         return {"data": result}
 
-
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
-        parser.add_argument('link', type=str, help="Please enter article link", location='args')
-        parser.add_argument('title', type=str, help="Please enter article title", location='args')
-        parser.add_argument('content', type=str, help="Please enter article content", location='args')
+        parser.add_argument('link', type=str, help="Please enter article link", location='json')
+        parser.add_argument('title', type=str, help="Please enter article title", location='json')
+        parser.add_argument('content', type=str, help="Please enter article content", location='json')
         db = get_db()
         data = parser.parse_args()
-
         db = get_db()
         try:
             result = insert_one_article(db, data)
             pass
         except Exception as e:
-            print(e)
-            return {"message": "Unexpected error"}, 400
-        return {"message": "Article added successfully", "data": result}, 200
+            return {"message": str(e)}, 400
+        return {"message": "Article added successfully", "data": result}, 201
 
 
 class ArticleOne(Resource):
@@ -58,5 +57,3 @@ class ArticleOne(Resource):
         except Exception as e:
             return {"message": f'{e}'}, 400
         return {'data': result}
-
-
