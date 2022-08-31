@@ -1,6 +1,8 @@
 import traceback
 
+import jwt
 from flask_restful import Resource, reqparse, output_json
+from flask_jwt_extended import jwt_required
 from api.db import get_db
 from api.service.article_service import get_all_articles, get_articles_pagination, get_one_article, insert_one_article, \
     delete_one_article, update_one_article
@@ -28,6 +30,7 @@ class ArticleList(Resource):
             return {"message": f'{e}'}, 400
         return {"data": result}
 
+    @jwt_required()
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
         parser.add_argument('link', type=str, help="Please enter article link", location='json')
@@ -59,6 +62,7 @@ class ArticleOne(Resource):
             return {"message": f'{e}'}, 400
         return {'data': result}
 
+    @jwt_required()
     def delete(self, article_id):
         db = get_db()
         try:
@@ -70,6 +74,7 @@ class ArticleOne(Resource):
             return {"message": str(e)}, 400
         return {"data": result}, 200
 
+    @jwt_required()
     def put(self, article_id):
         parser = reqparse.RequestParser(bundle_errors=True)
         parser.add_argument('link', type=str, help="Please enter link", location='json')
@@ -84,4 +89,4 @@ class ArticleOne(Resource):
         except Exception as e:
             print(traceback.print_exc())
             return {"message": str(e)}, 400
-        return {"message":"Update successfully", "data": result}, 200
+        return {"message": "Update successfully", "data": result}, 200

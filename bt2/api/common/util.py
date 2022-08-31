@@ -1,4 +1,8 @@
 import requests
+import werkzeug
+
+from api.common.auth import decode_auth_token
+from api.db import get_db
 
 
 def fetch_mock_data():
@@ -24,6 +28,20 @@ def retrieve_sql_row_data(row, *args) -> object:
 def check_if_article_exists(db, article_id):
     c = db.cursor()
     return c.execute("SELECT count(*) FROM article WHERE id=?", (article_id,)).fetchone()[0] > 0
+
+
 def check_if_user_exists(db, email):
     c = db.cursor()
     return c.execute("SELECT count(*) FROM user WHERE email=?", (email,)).fetchone()[0] > 0
+
+
+def get_hashed_password(db, email):
+    c = db.cursor()
+    return c.execute("SELECT password from user WHERE email=?", (email,)).fetchone()[0]
+
+
+def get_auth_token_for_test(test_client):
+    data = {"email": "td17@gmail.com", "password": "123456"}
+    response = test_client.post("/api/auth/login/", json=data,
+                                headers={"Content-Type": "application/json", "Accept": "application/json"})
+    return response.get_json()['auth_token']

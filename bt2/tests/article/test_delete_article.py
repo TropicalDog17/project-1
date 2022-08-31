@@ -6,6 +6,7 @@ import shortuuid
 from flask import jsonify
 
 
+
 def test_delete_exist_article(test_client):
     db = get_db()
     random_link = shortuuid.uuid() + "example.com"
