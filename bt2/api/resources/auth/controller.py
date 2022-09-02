@@ -6,7 +6,6 @@ from api.common.util import check_if_user_exists
 from api.db import get_db
 from api.service.auth_service import create_user, login, get_user_info
 from flask import g
-from localStoragePy import localStoragePy
 
 class Register(Resource):
     def post(self):
@@ -26,7 +25,6 @@ class Register(Resource):
             return {"message": str(e)}, 400
 class Login(Resource):
     def post(self):
-        localStorage = localStoragePy('api', 'sqlite')
         db = get_db()
         parser = reqparse.RequestParser(bundle_errors=True)
         parser.add_argument('email', type=str, help="Please enter email", location='json')
@@ -34,7 +32,6 @@ class Login(Resource):
         data = parser.parse_args()
         try:
             auth_token = login(db, data)
-            localStorage.setItem('jwt', auth_token);
             return {"message": "Login successfully", "auth_token": auth_token}, 200
             pass
         except Exception as e:

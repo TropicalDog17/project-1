@@ -11,5 +11,5 @@ CREATE TABLE IF NOT EXISTS article (
 CREATE TABLE user (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   email text UNIQUE  NOT NULL,
-  password text UNIQUE NOT NULL,
+  password text UNIQUE NOT NULL
 );

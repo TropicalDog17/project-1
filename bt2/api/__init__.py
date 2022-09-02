@@ -19,7 +19,7 @@ def create_app(test_config=None):
     @jwt.token_verification_loader
     @jwt.unauthorized_loader
     @jwt.invalid_token_loader
-    def my_loader(jwt_data):
+    def my_loader(jwt_payload, jwt_token):
         return {"message": "Invalid token"}, 401
 
     app.config.from_mapping(

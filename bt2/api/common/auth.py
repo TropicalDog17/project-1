@@ -1,4 +1,6 @@
 import datetime
+import traceback
+
 import jwt
 import os
 from dotenv import load_dotenv
@@ -19,11 +21,11 @@ def encode_auth_token(user_id):
         }
         return jwt.encode(
             payload,
-            os.getenv("SECRET_KEY"),
+           "TUGAGAMING",
             algorithm='HS256'
         )
     except Exception as e:
-        return e
+        raise e
 
 
 def decode_auth_token(auth_token):

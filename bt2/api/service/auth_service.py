@@ -16,9 +16,9 @@ def create_user(db, data):
             raise ValueError
 
         row = db.execute("INSERT INTO user (email, password) VALUES (?, ?)", (email, bcrypt.hashpw(
-            password.encode("utf-8"), bcrypt.gensalt(int(os.getenv("BCRYPT_LOG_ROUNDS"))))))
+            password.encode("utf-8"), bcrypt.gensalt(8))))
         db.commit()
-        auth_token = encode_auth_token(row.lastrowid)
+        auth_token = encode_auth_token(str(row.lastrowid))
         return {
             'auth_token': str(auth_token)
         }
