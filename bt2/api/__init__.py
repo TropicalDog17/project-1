@@ -8,7 +8,6 @@ from flask_jwt_extended import JWTManager
 
 def create_app(test_config=None):
     # create and configure the app
-    print(__name__)
     BASEDIR = os.path.abspath(os.path.dirname(os.path.abspath((os.path.dirname(__file__)))))
     app = Flask(__name__, instance_path=f'{BASEDIR}/instance')
     app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies", "json", "query_string"]
@@ -47,6 +46,4 @@ def create_app(test_config=None):
     return app
 
 #
-# app = Flask(__name__)
-# if __name__ == "__main__":
-#     app.run(debug=True)
+

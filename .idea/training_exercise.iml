@@ -6,7 +6,7 @@
       <sourceFolder url="file://$MODULE_DIR$/bt2" isTestSource="false" />
     </content>
     <content url="file://$MODULE_DIR$/bt2/api/api" />
-    <orderEntry type="jdk" jdkName="Python 3.9 (training_python_exercises) (4)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (training_exercise) (2)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PackageRequirementsSettings">
