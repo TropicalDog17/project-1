@@ -31,7 +31,7 @@ def test_insert_no_auth_token(test_client):
     }
     response = test_client.post("/api/articles/", json=info,
                                 headers={"Content-Type": "application/json",
-                                         "Authorization": f"Bearer","Connection": "keep-alive"
+                                         "Authorization": f"Bearer a"
                                     , "Accept": "application/json"}, )
     assert response.status_code == 401
 

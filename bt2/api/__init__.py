@@ -4,21 +4,35 @@ from flask import Flask, g
 
 from api.resources import auth
 from flask_jwt_extended import JWTManager
+from logging import FileHandler,WARNING
+
+def register_blueprint(app):
+    from api.resources import article, search
+    app.register_blueprint(article.article_bp, url_prefix="/api")
+    app.register_blueprint(search.search_bp, url_prefix="/api")
+    app.register_blueprint(auth.auth_bp, url_prefix="/api")
+    return app
 
 
 def create_app(test_config=None):
     # create and configure the app
     BASEDIR = os.path.abspath(os.path.dirname(os.path.abspath((os.path.dirname(__file__)))))
     app = Flask(__name__, instance_path=f'{BASEDIR}/instance')
+    file_handler = FileHandler('errorlog.txt')
+    file_handler.setLevel(WARNING)
     app.config["JWT_TOKEN_LOCATION"] = ["headers", "cookies", "json", "query_string"]
     app.config["JWT_SECRET_KEY"] = os.getenv("SECRET_KEY")
+    app.config['PROPAGATE_EXCEPTIONS'] = True
     jwt = JWTManager(app)
 
-    # Overriding default message when missing or invalid JWT token
-    @jwt.token_verification_loader
+    #Overriding default message when missing or invalid JWT token
     @jwt.unauthorized_loader
     @jwt.invalid_token_loader
-    def my_loader(jwt_payload, jwt_token):
+    def custom_loader(message):
+        return {"message": "Invalid token"}, 401
+
+    @jwt.token_verification_loader
+    def custom_loader2(jwt_payload, jwt_token):
         return {"message": "Invalid token"}, 401
 
     app.config.from_mapping(
@@ -39,11 +53,6 @@ def create_app(test_config=None):
         pass
     from . import db
     db.init_app(app)
-    from api.resources import article, search
-    app.register_blueprint(article.article_bp, url_prefix="/api")
-    app.register_blueprint(search.search_bp, url_prefix="/api")
-    app.register_blueprint(auth.auth_bp, url_prefix="/api")
+    register_blueprint(app)
     return app
-
 #
-

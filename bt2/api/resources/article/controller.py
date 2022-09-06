@@ -30,7 +30,7 @@ class ArticleList(Resource):
             return {"message": f'{e}'}, 400
         return {"data": result}
 
-    @jwt_required()
+    @jwt_required(optional=True)
     def post(self):
         parser = reqparse.RequestParser(bundle_errors=True)
         parser.add_argument('link', type=str, help="Please enter article link", location='json')

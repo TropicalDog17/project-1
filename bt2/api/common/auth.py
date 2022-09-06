@@ -35,7 +35,7 @@ def decode_auth_token(auth_token):
     :return: integer|string
     """
     try:
-        payload = jwt.decode(auth_token, os.getenv('SECRET_KEY'), algorithms=["HS256"])
+        payload = jwt.decode(auth_token, os.getenv("SECRET_KEY"), algorithms=["HS256"])
         return payload['sub']
     except jwt.ExpiredSignatureError:
         return 'Signature expired. Please log in again.'
