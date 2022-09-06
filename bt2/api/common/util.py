@@ -1,8 +1,4 @@
 import requests
-import werkzeug
-
-from api.common.auth import decode_auth_token
-from api.db import get_db
 
 
 def fetch_mock_data():
@@ -12,10 +8,10 @@ def fetch_mock_data():
     return resp.json()
 
 
-def retrieve_sql_row_data(row, *args) -> object:
+def retrieve_sql_row_data(row, *args):
     """
 
-    :param row: a single cursor row
+    param row: a single cursor row
     :param args: list of parameters to be retrieved
     :return:
     """

@@ -1,8 +1,6 @@
-import os
 
 import bcrypt
 import traceback
-from api.common.auth import encode_auth_token
 from api.common.util import retrieve_sql_row_data, check_if_user_exists, get_hashed_password
 
 from flask_jwt_extended import create_access_token, decode_token
@@ -49,7 +47,6 @@ def login(db, data):
         if not bcrypt.checkpw(password.encode("utf-8"), hashed_password):
             raise ValueError("Incorrect password")
         auth_token = create_access_token(identity=user_data['id'])
-        print(user_data['id'])
         return auth_token
     except Exception as e:
         raise e
