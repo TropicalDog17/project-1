@@ -10,7 +10,7 @@ def saving_article(collection, link, title, content,comments=[]):
         comments(optional): Danh sach tat ca cac comment(List)
     """
     if not collection.objects(title=title) or not collection.objects(content=content) or not collection.objects(comments=comments): 
-        article = collection(link=link, title=title, content=content, comments=comments).save()
+        article = collection(link=link, title=title, content="\"\"\"" + content + "\"\"\"" ).save()
     else:
         return
 

@@ -73,7 +73,7 @@ async def get_data(asession, i):
                     article_title = article_soup.find(
                         "h1", re.compile("title[\S]*")).get_text()
                     article_content = article_soup.find(
-                        "article", "fck_detail").get_text().replace("\n", " ")
+                        "article", "fck_detail").get_text().replace("\n", " ").replace(",", "")
                     article_comments = fetch_comment(article_soup)
 
                     # print_time_elapsed(saving_article, Article, i, article_title, article_content, comments=article_comments)

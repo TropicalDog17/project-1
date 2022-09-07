@@ -4,7 +4,6 @@ import string
 
 def test_search_valid_query(test_client):
     response = test_client.get("/api/search/article/content", query_string="query=a")
-    print(response.data)
     assert response.status_code == 200
     assert "data" in response.get_json()
 

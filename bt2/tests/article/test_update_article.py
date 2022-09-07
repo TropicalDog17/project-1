@@ -35,6 +35,7 @@ def test_update_without_article_id(test_client):
     data = {
         "link": random_link, "title": random_title, "content": "fssdfssdfsdfc"
     }
+    auth_token = get_auth_token_for_test(test_client)
     response = test_client.put(f"api/articles/", json=data,
                                headers={"Authorization": "Bearer " + auth_token, "Content-Type": "application/json",
                                         "Accept": "application/json"}, )
