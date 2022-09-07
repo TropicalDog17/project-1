@@ -70,11 +70,14 @@ Cài đặt các packages cần thiết
 Cài đặt RabbitMQ(Message broker), xem tại đây: https://docs.celeryq.dev/en/stable/getting-started/backends-and-brokers/rabbitmq.html#broker-rabbitmq
 
 Khởi chạy RabbitMQ:
+
     sudo rabbitmq-server
 
 Khởi chạy Celery worker:
+
     celery -A main worker --loglevel=INFO
 
 Chạy chương trình scrape:
+
     python main.py
 
