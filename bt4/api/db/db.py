@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = "sqlite:////home/fosec/Tropical/python/training_python_exercises/bt4-fastapi/api/db/dbapi.db"
+SQLALCHEMY_DATABASE_URL = "sqlite:////home/fosec/Tropical/python/training_python_exercises/bt4/api/db/dbapi.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 engine = create_engine(
