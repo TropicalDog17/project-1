@@ -21,6 +21,7 @@ root.render(
         ></Route>
 <Route path="add" element={<AddPage />}></Route> */}
       </Route>
+      <Route path="*" element={<ErrorPage />} />
     </Routes>
   </BrowserRouter>
 );

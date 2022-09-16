@@ -12,7 +12,10 @@ function Article() {
           deserunt autem mollitia quis accusamus reiciendis sed! Ut facere ipsum
           vel!
         </Card.Text>
-        <Button variant="primary">Xem thêm</Button>
+        <Button variant="primary">View more</Button>
+        <Button variant="success" className="m-2">
+          Edit
+        </Button>
       </Card.Body>
     </Card>
   );
