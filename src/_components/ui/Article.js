@@ -1,6 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-export default function Article() {
+export { Article };
+function Article() {
   return (
     <Card style={{ width: "15rem" }}>
       <Card.Body>

@@ -1,5 +1,6 @@
-import Pagination from "react-bootstrap/Pagination";
+import Pagination from "react-bootstrap/Pagination"; //Duplicated name
 
+export { PaginationComponent };
 function PaginationComponent() {
   return (
     <Pagination>
@@ -21,5 +22,3 @@ function PaginationComponent() {
     </Pagination>
   );
 }
-
-export default PaginationComponent;

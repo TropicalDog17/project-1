@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
-import ArticleGrid from "../_components/ArticleGrid";
-import Navbar from "../_components/Navbar";
-import PaginationComponent from "../_components/PaginationComponent";
+import { ArticleGrid } from "../../_components/ui/ArticleGrid";
+import Navbar from "../../_components/ui/Navbar";
+import { PaginationComponent } from "../../_components/ui/PaginationComponent";
 export default function ArticlePage() {
   return (
     <React.Fragment>

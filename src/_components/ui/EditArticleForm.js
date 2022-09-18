@@ -18,10 +18,6 @@ function EditArticleForm() {
       </Form.Group>
 
       <div className="d-flex justify-content-between">
-        <Button variant="danger" type="submit">
-          Reset
-        </Button>
-
         <Button variant="primary" type="submit">
           Submit
         </Button>
@@ -29,4 +25,3 @@ function EditArticleForm() {
     </Form>
   );
 }
-export default EditArticleForm;
