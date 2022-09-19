@@ -1,8 +1,8 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { authAtom } from "../state";
 import Navbar from "../_components/ui/Navbar";
 export const ProtectedLayout = () => {
-  const { user } = useAuth();
+  const user = useRecoilValue(authAtom);
 
   if (!user) {
     return <Navigate to="/" />;

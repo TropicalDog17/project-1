@@ -1,14 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Navigate, Outlet } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
+import { useRecoilValue } from "recoil";
+import { authAtom } from "../state";
 import Navbar from "./ui/Navbar";
 
 export const HomeLayout = () => {
-  const { user } = useAuth();
+  const user = useRecoilValue(authAtom);
 
-  if (user) {
-    return <Navigate to="/" />;
-  }
+  useEffect(() => {
+    if (user) {
+      <Navigate to="/" />;
+    }
+  }, []);
 
   return (
     <React.Fragment>

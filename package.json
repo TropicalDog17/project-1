@@ -11,14 +11,18 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hookform/resolvers": "^2.9.8",
     "bootstrap": "^5.2.1",
     "circular-dependency-plugin": "^5.2.2",
     "css-loader": "^6.7.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.5.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.35.0",
     "react-router-dom": "^6.4.0",
-    "style-loader": "^3.3.1"
+    "recoil": "^0.7.5",
+    "style-loader": "^3.3.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.19.0",
