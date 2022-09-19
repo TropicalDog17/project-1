@@ -1,14 +1,18 @@
 const path = require("path");
 const webpack = require("webpack");
-
+const CircularDependencyPlugin = require("circular-dependency-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   entry: "./src/index.js",
   mode: "development",
   output: {
-    filename: "bundle.js",
-    path: path.resolve("dist"),
-    publicPath: "/dist/",
+    filename: "[name].bundle.js",
+    path: path.resolve(__dirname, "dist"),
+    clean: true,
+    publicPath: "/",
   },
+  devtool: "inline-source-map",
   module: {
     rules: [
       {
@@ -16,14 +20,32 @@ module.exports = {
         exclude: /node_modules/,
         use: "babel-loader",
       },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "public"),
+      directory: "./dist",
+    },
+    devMiddleware: {
+      index: true,
+      mimeTypes: { phtml: "text/html" },
+      publicPath: "/public",
+      serverSideRender: true,
+      writeToDisk: true,
     },
     compress: true,
     port: 9000,
     historyApiFallback: true,
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "template.html",
+      title: "Development",
+    }),
+    new CleanWebpackPlugin(),
+  ],
 };

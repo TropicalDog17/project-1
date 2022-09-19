@@ -1,7 +1,7 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 export { Article };
-function Article() {
+function Article({ articleId }) {
   return (
     <Card style={{ width: "15rem" }}>
       <Card.Body>
@@ -13,7 +13,11 @@ function Article() {
           vel!
         </Card.Text>
         <Button variant="primary">View more</Button>
-        <Button variant="success" className="m-2">
+        <Button
+          variant="success"
+          href={`/article/edit/${articleId}`}
+          className="m-2"
+        >
           Edit
         </Button>
       </Card.Body>

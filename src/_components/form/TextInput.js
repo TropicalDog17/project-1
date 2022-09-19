@@ -1,8 +1,10 @@
+import Form from "react-bootstrap/Form";
 export { TextInput };
 function TextInput({ label }) {
+  const newLabel = label.charAt(0).toUpperCase() + label.slice(1); //Capitalize first letter
   return (
-    <Form.Group className="mb-3" controlId="formBasicTitle">
-      <Form.Label>{label}</Form.Label>
+    <Form.Group className="mb-3" controlId={`formBasic${newLabel}`}>
+      <Form.Label>{newLabel}</Form.Label>
       <Form.Control type="text" placeholder={"Enter " + label} />
     </Form.Group>
   );

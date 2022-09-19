@@ -9,7 +9,7 @@ function ArticleGrid() {
     <Row xs={2} md={5} className="g-3 m-2">
       {Array.from({ length: 10 }).map((_, idx) => (
         <Col key={idx}>
-          <Article />
+          <Article articleId={idx} />
         </Col>
       ))}
     </Row>

@@ -15,7 +15,12 @@ export default function Navbar() {
         </Nav.Link>
       </Nav.Item>
       <Nav.Item as="li" className="bg-success m-2 pe-3 ps-3">
-        <Nav.Link href="login" eventKey="link-2" className="text-light">
+        <Nav.Link href="/article/add" eventKey="link-2" className="text-light">
+          Add Article
+        </Nav.Link>
+      </Nav.Item>
+      <Nav.Item as="li" className="bg-success m-2 pe-3 ps-3">
+        <Nav.Link href="/login" eventKey="link-2" className="text-light">
           Login
         </Nav.Link>
       </Nav.Item>

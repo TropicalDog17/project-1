@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Outlet } from "react-router-dom";
+import { EditArticleForm } from "../../_components/ui/EditArticleForm";
 export default function AddPage() {
-  return (
-    <React.Fragment>
-      <Outlet />
-    </React.Fragment>
-  );
+  return <EditArticleForm />;
 }
