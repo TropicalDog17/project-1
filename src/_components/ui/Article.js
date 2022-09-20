@@ -1,6 +1,6 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
-export { Article };
+export { Article as Article };
 function Article({ articleId, link, title, content }) {
   return (
     <Card
@@ -11,7 +11,9 @@ function Article({ articleId, link, title, content }) {
         <Card.Title>{shortenTitle(title)}</Card.Title>
         <Card.Text>{shortenContent(content)}</Card.Text>
         <div className="position-absolute bottom-0 m-3">
-          <Button variant="primary">View more</Button>
+          <Button variant="primary" href={`/article/${articleId}`}>
+            View more
+          </Button>
           <Button
             variant="success"
             href={`/article/edit/${articleId}`}

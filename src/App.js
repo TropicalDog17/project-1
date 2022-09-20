@@ -6,6 +6,7 @@ import AddPage from "./pages/AddPage";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { HomeLayout } from "./_components/HomeLayout";
 import { ProtectedLayout } from "./_components/ProtectedLayout";
+import ArticlePage from "./pages/ArticlePage";
 // import ProfilePage from "./pages/Profile/ProfilePage";
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       </Route>
       {
         <Route path="/article" element={<ProtectedLayout />}>
+          <Route path=":articleId" element={<ArticlePage />} />
           <Route path="edit/:articleId" element={<EditPage />} />
           <Route path="add" element={<AddPage />} />
         </Route>
