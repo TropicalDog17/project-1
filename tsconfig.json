@@ -1,7 +1,0 @@
-{
-  "compilerOptions": {
-    "experimentalDecorators": true
-  },
-  "experiments.topLevelAwait": true,
-  "include": ["./src/"]
-}

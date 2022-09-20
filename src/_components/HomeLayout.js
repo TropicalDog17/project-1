@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { Navigate, Outlet } from "react-router-dom";
+import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../state";
 import Navbar from "./ui/Navbar";
 
 export const HomeLayout = () => {
-  const user = useRecoilValue(authAtom);
-
+  const auth = useRecoilValue(authAtom);
+  const navigate = useNavigate();
   useEffect(() => {
-    if (user) {
-      <Navigate to="/" />;
+    if (auth) {
+      navigate("/");
     }
   }, []);
 
