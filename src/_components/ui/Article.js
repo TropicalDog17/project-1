@@ -26,8 +26,10 @@ function Article({ articleId, link, title, content }) {
 }
 
 function shortenTitle(title) {
+  if (title.length < 30) return title;
   return title.slice(0, 30) + "...";
 }
 function shortenContent(content) {
+  if (content.length < 100) return content;
   return content.slice(0, 100) + "...";
 }

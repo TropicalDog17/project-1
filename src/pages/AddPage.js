@@ -1,5 +1,5 @@
 import * as React from "react";
-import { EditArticleForm } from "../_components/ui/EditArticleForm";
+import { AddArticleForm } from "../_components/ui/AddArticleForm";
 export default function AddPage() {
-  return <EditArticleForm />;
+  return <AddArticleForm />;
 }
