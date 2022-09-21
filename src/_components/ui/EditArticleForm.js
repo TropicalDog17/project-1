@@ -32,7 +32,7 @@ function EditArticleForm({ articleId }) {
   }
   return (
     <Form className="mx-auto" style={{ width: "500px" }} onSubmit={onSubmit}>
-      <h1>Article id {JSON.stringify(article)}</h1>
+      <h1>Edit article</h1>
       <TextInput
         label="link"
         value={article.link || ""}
