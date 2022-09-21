@@ -14,23 +14,13 @@ export default function App() {
       <Route element={<HomeLayout />}>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/article/:articleId" element={<ArticlePage />} />
         {/* <Route path="/profile" element={<ProfilePage />}/> */}
       </Route>
-      {
-        <Route path="/article" element={<ProtectedLayout />}>
-          <Route path=":articleId" element={<ArticlePage />} />
-          <Route path="edit/:articleId" element={<EditPage />} />
-          <Route path="add" element={<AddPage />} />
-        </Route>
-      }
-      {/* <Route index element={<Homepage />} />
-        <Route path="login" element={<LoginPage />} />
-        <Route
-          path="edit/:articleId"
-          element={<EditPage id={articleId} />}
-        ></Route>
-<Route path="add" element={<AddPage />}></Route> */}
-      {/* <Route path="*" element={<ErrorPage />} /> */}
+      <Route path="/article" element={<ProtectedLayout />}>
+        <Route path="edit/:articleId" element={<EditPage />} />
+        <Route path="add" element={<AddPage />} />
+      </Route>
     </Routes>
   );
 }

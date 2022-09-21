@@ -4,7 +4,15 @@ import { useRecoilValue } from "recoil";
 import { authAtom } from "../state";
 import Navbar from "./ui/Navbar";
 
-export const HomeLayout = () => {
+export const AuthLayout = () => {
+  const auth = useRecoilValue(authAtom);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (auth) {
+      navigate("/");
+    }
+  }, []);
+
   return (
     <React.Fragment>
       <Navbar />
