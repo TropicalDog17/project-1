@@ -7,11 +7,13 @@ import { articleAtom, articleIndexAtom } from "../../state/articles";
 import { DeleteModal } from "./DeleteModal";
 import React, { useState } from "react";
 import { useUserActions } from "../../common";
+import { currentPageSelector } from "../../state";
 export { ArticleGrid };
 function ArticleGrid() {
   const [articles, setArticles] = useRecoilState(articleAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articleIndex, setArticleIndex] = useRecoilState(articleIndexAtom);
+  const currentPage = useRecoilValue(currentPageSelector);
   return (
     <React.Fragment>
       {isModalOpen && (
@@ -22,7 +24,7 @@ function ArticleGrid() {
         />
       )}
       <Row xs={2} md={5} className="g-3 m-2">
-        {articles.map((article, idx) => (
+        {currentPage.map((article, idx) => (
           <Col key={idx}>
             <Article
               articleId={idx}
@@ -51,6 +53,9 @@ function ArticleGrid() {
     const newArticles = articles.filter(
       (article) => article !== articles[articleIndex]
     );
+    // const newCurrentPage = currentPage.filter(
+    //   (article) => article !== currentPage[articleIndex]
+    // );
     setArticles(newArticles);
     localStorage.setItem("article", JSON.stringify(newArticles));
   }

@@ -19,8 +19,12 @@ export default function Navbar() {
           FOSEC
         </Nav.Link>
       </Nav.Item>
-      <Nav.Item as="li" className="bg-success m-2 pe-3 ps-3">
-        <Nav.Link href="/article/add" eventKey="link-2" className="text-light">
+      <Nav.Item as="li" className="">
+        <Nav.Link
+          href="/article/add"
+          eventKey="link-2"
+          className="bg-success m-2 pe-3 ps-3 text-light"
+        >
           Add Article
         </Nav.Link>
       </Nav.Item>
@@ -30,8 +34,12 @@ export default function Navbar() {
 }
 function LoginButton() {
   return (
-    <Nav.Item as="li" className="bg-success m-2 pe-3 ps-3">
-      <Nav.Link href="/login" eventKey="link-2" className="text-light">
+    <Nav.Item as="li" className="">
+      <Nav.Link
+        href="/login"
+        eventKey="link-2"
+        className="bg-success m-2 pe-3 ps-3 text-light"
+      >
         Login
       </Nav.Link>
     </Nav.Item>
@@ -40,8 +48,11 @@ function LoginButton() {
 function LogoutButton() {
   const { logout } = useUserActions();
   return (
-    <Nav.Item as="li" className="bg-danger m-2 pe-3 ps-3" onClick={logout}>
-      <Nav.Link eventKey="link-2" className="text-light">
+    <Nav.Item as="li" className="" onClick={logout}>
+      <Nav.Link
+        eventKey="link-2"
+        className="bg-danger m-2 pe-3 ps-3 text-light"
+      >
         Logout
       </Nav.Link>
     </Nav.Item>
