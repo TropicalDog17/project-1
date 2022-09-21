@@ -13,7 +13,7 @@ function useSubmitForm(state) {
     title: yup.string().required(),
     content: yup.string().required(),
   });
-  function addArticle(state) {
+  function addArticle() {
     schema.isValid(state).then(function (valid) {
       if (!valid) {
         setIsFail(true);
@@ -36,16 +36,13 @@ function useSubmitForm(state) {
         setIsFail(true);
         // return <Navigate to="/article/add" />;
       } else {
-        const newArticles = [...articles, state];
-        console.log(newArticles);
-        localStorage.setItem("article", JSON.stringify(newArticles));
-        setArticle(newArticles);
+        localStorage.setItem("article", JSON.stringify(articles));
         setIsFail(false);
-        alert("Article added successfully");
+        alert("Article edited successfully");
         navigate("/");
       }
     });
   }
-  return [isFail, addArticle, editArticle];
+  return { isFail, addArticle, editArticle };
 }
 export { useSubmitForm };

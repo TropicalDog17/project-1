@@ -5,3 +5,4 @@ export * from "./Login";
 export * from "./ArticleGrid";
 export * from "./EditArticleForm";
 export * from "./AddArticleForm";
+export * from "./DeleteModal";

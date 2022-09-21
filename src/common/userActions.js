@@ -1,7 +1,6 @@
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { authAtom, usersAtom } from "../state";
 import { useNavigate, Navigate } from "react-router-dom";
-import { Nav } from "react-bootstrap";
 export { useUserActions };
 function useUserActions() {
   const setAuth = useSetRecoilState(authAtom);
@@ -12,15 +11,15 @@ function useUserActions() {
     logout,
   };
   function login(email, password) {
-    const navigate = useNavigate();
     let user = { email: email, password: password };
     user.authData = email + ":" + password;
     localStorage.setItem("user", JSON.stringify(user));
-    navigate("/edit");
+    return <Navigate to="/" />;
   }
   function logout() {
     localStorage.removeItem("user");
     setAuth(null);
     return <Navigate to="/" replace={true} />;
   }
+  function deleteArticle() {}
 }

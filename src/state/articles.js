@@ -1,9 +1,10 @@
 import { atom, selector } from "recoil";
+import { replaceItemAtIndex } from "../common";
 
 const articleAtom = atom({
   key: "article",
   // get initial state from local storage to enable user to stay logged in
-  default: JSON.parse(localStorage.getItem("article")),
+  default: JSON.parse(localStorage.getItem("article")) || [],
 });
 const articleIndexAtom = atom({
   key: "articleIndex",
@@ -19,5 +20,14 @@ const singleArticleState = selector({
     }
     return {};
   },
+  set: ({ get, set }, newValue) =>
+    set(
+      articleAtom,
+      replaceItemAtIndex(
+        get(articleAtom),
+        parseInt(get(articleIndexAtom)),
+        newValue
+      )
+    ),
 });
 export { articleAtom, articleIndexAtom, singleArticleState };

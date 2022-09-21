@@ -10,7 +10,7 @@ function AddArticleForm({ articleId }) {
     title: "",
     content: "",
   });
-  const [isFail, editArticle] = useSubmitForm(newArticle);
+  const { isFail, addArticle } = useSubmitForm(newArticle);
 
   function onSubmit(e) {
     e.preventDefault();
