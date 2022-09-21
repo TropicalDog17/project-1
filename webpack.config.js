@@ -3,7 +3,6 @@ const webpack = require("webpack");
 const CircularDependencyPlugin = require("circular-dependency-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const ESLintPlugin = require("eslint-webpack-plugin");
 module.exports = {
   entry: "./src/index.js",
   mode: "development",
@@ -48,6 +47,5 @@ module.exports = {
       title: "Development",
     }),
     new CleanWebpackPlugin(),
-    new ESLintPlugin(options),
   ],
 };
