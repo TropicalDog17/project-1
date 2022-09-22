@@ -48,6 +48,5 @@ module.exports = {
       title: "Development",
     }),
     new CleanWebpackPlugin(),
-    new ESLintPlugin(options),
   ],
 };
