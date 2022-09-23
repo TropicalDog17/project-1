@@ -5,6 +5,7 @@ import Button from "react-bootstrap/Button";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../../state";
 import { useUserActions } from "../../common/userActions";
+import { LogoutButton, LoginButton } from "./";
 export default function Navbar() {
   const isAuth = useRecoilValue(authAtom);
 
@@ -30,31 +31,5 @@ export default function Navbar() {
       </Nav.Item>
       {!isAuth ? <LoginButton /> : <LogoutButton />}
     </Nav>
-  );
-}
-function LoginButton() {
-  return (
-    <Nav.Item as="li" className="">
-      <Nav.Link
-        href="/login"
-        eventKey="link-2"
-        className="bg-success m-2 pe-3 ps-3 text-light"
-      >
-        Login
-      </Nav.Link>
-    </Nav.Item>
-  );
-}
-function LogoutButton() {
-  const { logout } = useUserActions();
-  return (
-    <Nav.Item as="li" className="" onClick={logout}>
-      <Nav.Link
-        eventKey="link-2"
-        className="bg-danger m-2 pe-3 ps-3 text-light"
-      >
-        Logout
-      </Nav.Link>
-    </Nav.Item>
   );
 }

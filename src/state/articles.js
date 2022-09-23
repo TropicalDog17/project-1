@@ -5,8 +5,8 @@ import { DEFAULT_ARTICLES_FOR_PAGIATION_TEST } from "../common";
 const articleAtom = atom({
   key: "article",
   // get initial state from local storage to enable user to stay logged in
-  // default: JSON.parse(localStorage.getItem("article")) || [],
-  default: DEFAULT_ARTICLES_FOR_PAGIATION_TEST,
+  default: JSON.parse(localStorage.getItem("article")) || [],
+  // default: DEFAULT_ARTICLES_FOR_PAGIATION_TEST,
 });
 const articleIndexAtom = atom({
   key: "articleIndex",

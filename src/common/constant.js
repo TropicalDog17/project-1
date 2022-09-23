@@ -470,4 +470,9 @@ const DEFAULT_ARTICLES_FOR_PAGIATION_TEST = [
       "Nulla eu quis duis mollit ut occaecat. Esse consectetur irure magna nulla dolor amet. Deserunt velit magna ex aliqua sit qui in commodo duis et adipisicing Lorem exercitation.",
   },
 ];
-export { DEFAULT_USERS, DEFAULT_ARTICLES_FOR_PAGIATION_TEST };
+const MAX_ARTICLES_PER_PAGE = 5;
+export {
+  DEFAULT_USERS,
+  DEFAULT_ARTICLES_FOR_PAGIATION_TEST,
+  MAX_ARTICLES_PER_PAGE,
+};
