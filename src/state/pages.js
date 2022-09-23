@@ -1,7 +1,7 @@
 import { atom, selector } from "recoil";
 import { articleAtom } from "./articles";
 
-const pageIndexAtom = atom({
+const currentPageIndexAtom = atom({
   key: "pageIndex",
   default: 1,
 });
@@ -9,7 +9,7 @@ const pageIndexAtom = atom({
 const currentPageSelector = selector({
   key: "articlePage",
   get: ({ get }) => {
-    const idx = get(pageIndexAtom);
+    const idx = get(currentPageIndexAtom);
     const articles = get(articleAtom);
     const MAX_ARTICLE_PER_PAGE = 5;
     const articleCollectionLength = articles.length;
@@ -25,4 +25,4 @@ const currentPageSelector = selector({
     );
   },
 });
-export { pageIndexAtom, currentPageSelector };
+export { currentPageIndexAtom as pageIndexAtom, currentPageSelector };

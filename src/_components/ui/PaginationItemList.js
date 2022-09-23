@@ -2,18 +2,22 @@ import Pagination from "react-bootstrap/Pagination";
 import { useSetRecoilState, useRecoilValue } from "recoil";
 import { Fragment } from "react";
 import { articleAtom, pageIndexAtom } from "../../state";
-import { MAX_ARTICLES_PER_PAGE } from "../../common";
+import {
+  MAX_ARTICLES_PER_PAGE,
+  MAX_VISIBLE_PAGINATION_ITEM,
+} from "../../common";
+import { useHandlePagination } from "../../hooks";
 export { PaginationItemList };
 
 function PaginationItemList() {
   const articles = useRecoilValue(articleAtom);
   const length = Math.ceil(articles.length / MAX_ARTICLES_PER_PAGE);
-  const handlePageIndex = useHandlePageIndex();
-  const pageIndex = useRecoilValue(pageIndexAtom);
+  const { handleIndex } = useHandlePagination();
+  const currentPageIndex = useRecoilValue(pageIndexAtom);
   if (!articles || length < 0) return;
   else if (length === 1)
     return (
-      <Pagination.Item onClick={() => handlePageIndex(1)} active={true}>
+      <Pagination.Item onClick={() => handleIndex(1)} active={true}>
         {1}
       </Pagination.Item>
     );
@@ -22,9 +26,9 @@ function PaginationItemList() {
       <Fragment>
         {Array.from(Array(length).keys()).map((_, idx) => {
           <Pagination.Item
-            onClick={() => handlePageIndex(idx + 1)}
+            onClick={() => handleIndex(idx + 1)}
             key={idx + 1}
-            active={idx + 1 === pageIndex}
+            active={idx + 1 === currentPageIndex}
             className="w-100"
           >
             {idx + 1}
@@ -33,14 +37,14 @@ function PaginationItemList() {
       </Fragment>
     );
   // const middlePageIndex = Math.floor(length / 2);
-  if (pageIndex < 4) {
+  if (currentPageIndex < 4) {
     return (
       <Fragment>
-        {Array.from(Array(4).keys()).map((_, idx) => (
+        {Array.from(Array(MAX_VISIBLE_PAGINATION_ITEM).keys()).map((_, idx) => (
           <Pagination.Item
-            onClick={() => handlePageIndex(idx + 1)}
+            onClick={() => handleIndex(idx + 1)}
             key={idx + 1}
-            active={idx + 1 === pageIndex}
+            active={currentPageIndex === idx + 1}
           >
             {idx + 1}
           </Pagination.Item>
@@ -48,26 +52,22 @@ function PaginationItemList() {
       </Fragment>
     );
   } else {
+    const visibleToUserPageIndexes = Array.from(
+      { length: MAX_VISIBLE_PAGINATION_ITEM },
+      (_, i) => i + 1
+    ); //An array contains indexes visible to user
     return (
       <Fragment>
-        {Array.from(Array(4).keys()).map((_, idx) => (
+        {visibleToUserPageIndexes.map((idx) => (
           <Pagination.Item
-            onClick={() => handlePageIndex(idx + pageIndex - 3)}
-            key={idx + pageIndex - 3}
-            active={idx + pageIndex - 3 === pageIndex}
+            onClick={() => handleIndex(idx + currentPageIndex - 3)}
+            key={idx + currentPageIndex - 3}
+            active={idx + currentPageIndex - 3 === currentPageIndex}
           >
-            {idx + pageIndex - 3}
+            {idx + currentPageIndex - 3}
           </Pagination.Item>
         ))}
       </Fragment>
     );
-  }
-
-  function useHandlePageIndex() {
-    const setPageIndex = useSetRecoilState(pageIndexAtom);
-    function handlePageIndex(index) {
-      setPageIndex(index);
-    }
-    return handlePageIndex;
   }
 }
