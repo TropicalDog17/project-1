@@ -2,7 +2,12 @@ import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { Article } from "./Article";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import {
+  useRecoilCallback,
+  useRecoilState,
+  useRecoilValue,
+  useSetRecoilState,
+} from "recoil";
 import { articleAtom, articleIndexAtom } from "../../state/articles";
 import { DeleteModal } from "./DeleteModal";
 import React, { useState } from "react";
