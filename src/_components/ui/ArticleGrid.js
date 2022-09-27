@@ -7,13 +7,15 @@ import { articleAtom, articleIndexAtom } from "../../state/articles";
 import { DeleteModal } from "./DeleteModal";
 import React, { useState } from "react";
 import { useUserActions } from "../../common";
-import { currentPageSelector } from "../../state";
+import { currentPageIndexSelector } from "../../state";
+import { useEffect } from "react";
+import axios from "axios";
 export { ArticleGrid };
 function ArticleGrid() {
   const [articles, setArticles] = useRecoilState(articleAtom);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [articleIndex, setArticleIndex] = useRecoilState(articleIndexAtom);
-  const currentPage = useRecoilValue(currentPageSelector);
+  const currentPageIndex = useRecoilValue(currentPageIndexSelector);
   return (
     <React.Fragment>
       {isModalOpen && (
@@ -24,11 +26,11 @@ function ArticleGrid() {
         />
       )}
       <Row xs={2} md={5} className="g-3 m-2">
-        {currentPage.map((article, idx) => (
+        {currentPageIndex.map((idx) => (
           <Col key={idx}>
             <Article
               articleId={idx}
-              {...article}
+              {...articles[idx]}
               onDeleteClick={onDeleteClick}
             />
           </Col>

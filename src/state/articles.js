@@ -1,12 +1,18 @@
 import { atom, selector } from "recoil";
 import { replaceItemAtIndex } from "../common";
 import { DEFAULT_ARTICLES_FOR_PAGIATION_TEST } from "../common";
-
+import articleController from "../controller/articleController";
+import { ApiSelector } from "./api";
 const articleAtom = atom({
   key: "article",
   // get initial state from local storage to enable user to stay logged in
-  default: JSON.parse(localStorage.getItem("article")) || [],
   // default: DEFAULT_ARTICLES_FOR_PAGIATION_TEST,
+  default: selector({
+    key: "articleLoader",
+    get: async () => {
+      return await articleController.getAll();
+    },
+  }),
 });
 const articleIndexAtom = atom({
   key: "articleIndex",

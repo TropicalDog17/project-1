@@ -52,22 +52,25 @@ function PaginationItemList() {
       </Fragment>
     );
   } else {
-    const visibleToUserPageIndexes = Array.from(
-      { length: MAX_VISIBLE_PAGINATION_ITEM },
-      (_, i) => i + 1
-    ); //An array contains indexes visible to user
+    const PageIndexesVisibleToUser = getVisiblePageIndexes(); //An array contains indexes visible to user
     return (
       <Fragment>
-        {visibleToUserPageIndexes.map((idx) => (
+        {PageIndexesVisibleToUser.map((idx) => (
           <Pagination.Item
-            onClick={() => handleIndex(idx + currentPageIndex - 3)}
-            key={idx + currentPageIndex - 3}
-            active={idx + currentPageIndex - 3 === currentPageIndex}
+            onClick={() => handleIndex(idx)}
+            key={idx}
+            active={idx === currentPageIndex}
           >
-            {idx + currentPageIndex - 3}
+            {idx}
           </Pagination.Item>
         ))}
       </Fragment>
     );
+  }
+  function getVisiblePageIndexes() {
+    return Array.from(
+      { length: MAX_VISIBLE_PAGINATION_ITEM },
+      (_, i) => i + currentPageIndex - 2
+    ).filter((i) => i <= length);
   }
 }
