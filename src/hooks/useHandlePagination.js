@@ -1,10 +1,10 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { pageIndexAtom, articleAtom, currentPageSelector } from "../state";
+import { pageIndexAtom, articleAtom, currentPageIndexSelector } from "../state";
 import { MAX_ARTICLES_PER_PAGE } from "../common";
 export { useHandlePagination };
 function useHandlePagination() {
   const [pageIndex, setPageIndex] = useRecoilState(pageIndexAtom);
-  const articleList = useRecoilValue(currentPageSelector);
+  const articleList = useRecoilValue(currentPageIndexSelector);
   const articles = useRecoilValue(articleAtom);
   return {
     handlePrev,

@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "@hookform/resolvers": "^2.9.8",
+    "axios": "^0.27.2",
     "bootstrap": "^5.2.1",
     "circular-dependency-plugin": "^5.2.2",
     "css-loader": "^6.7.1",
