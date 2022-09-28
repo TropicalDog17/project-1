@@ -36,7 +36,7 @@ function LoginController() {
             },
           };
           const response = await axios.post(
-            "https://7w4kxl.deta.dev/token",
+            "http://localhost:5000/token",
             qs.stringify(user),
             axiosConfig
           );
