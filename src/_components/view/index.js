@@ -1,2 +1,2 @@
 export * from "./Login";
-import * from "./EditArticle"
+export * from "./EditArticle";

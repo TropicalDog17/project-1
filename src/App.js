@@ -1,7 +1,5 @@
 import * as React from "react";
-import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
-import EditPage from "./pages/EditPage";
 import AddPage from "./pages/AddPage";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 import { HomeLayout } from "./_components/HomeLayout";
@@ -9,6 +7,7 @@ import { ProtectedLayout } from "./_components/ProtectedLayout";
 import ErrorPage from "./pages/ErrorPage";
 import ArticlePage from "./pages/ArticlePage";
 import { LoginController } from "./_components/controller";
+import { EditArticleController } from "./_components/controller/EditArticleController";
 // import ProfilePage from "./pages/Profile/ProfilePage";
 export default function App() {
   return (
@@ -20,7 +19,7 @@ export default function App() {
         {/* <Route path="/profile" element={<ProfilePage />}/> */}
       </Route>
       <Route path="/article" element={<ProtectedLayout />}>
-        <Route path="edit/:articleId" element={<EditPage />} />
+        <Route path="edit/:articleId" element={<EditArticleController />} />
         <Route path="add" element={<AddPage />} />
       </Route>
       <Route path="*" element={<ErrorPage />} />

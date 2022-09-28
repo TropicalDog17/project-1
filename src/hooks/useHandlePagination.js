@@ -23,7 +23,7 @@ function useHandlePagination() {
     }
   }
   function handleNext() {
-    if (articles.length / MAX_ARTICLES_PER_PAGE < pageIndex) {
+    if (articles.length / MAX_ARTICLES_PER_PAGE <= pageIndex) {
       setPageIndex(pageIndex);
     } else {
       setPageIndex(pageIndex + 1);

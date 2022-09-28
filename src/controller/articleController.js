@@ -1,6 +1,6 @@
 import axios from "axios";
 const axios_config = {
-  baseURL: "https://7w4kxl.deta.dev",
+  baseURL: "http://localhost:5000",
   headers: { crossorigin: true },
 };
 const articleController = {

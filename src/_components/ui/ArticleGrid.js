@@ -34,7 +34,7 @@ function ArticleGrid() {
         {currentPageIndex.map((idx) => (
           <Col key={idx}>
             <Article
-              articleId={idx}
+              articleId={articles[idx].id}
               {...articles[idx]}
               onDeleteClick={onDeleteClick}
             />

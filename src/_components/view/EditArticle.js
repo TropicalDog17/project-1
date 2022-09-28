@@ -1,29 +1,26 @@
 import Form from "react-bootstrap/Form";
 import { SubmitButton } from "../form/SubmitButton";
 import { TextInput } from "../form/TextInput";
-import { singleArticleState, articleIndexAtom } from "../../state/articles";
-import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
-import { useEffect, useState } from "react";
-import { useSubmitForm } from "../../hooks";
+
 export { EditArticle };
-function EditArticle({ editArticle, articleId }) {
-  const setArticleIndex = useSetRecoilState(articleIndexAtom);
-  useEffect(() => {
-    setArticleIndex(articleId);
-  }, []);
-  const [article, setArticle] = useRecoilState(singleArticleState);
+function EditArticle({
+  editArticle,
+  article,
+  handleChange,
+  isFail,
+  errMessage,
+}) {
   function onSubmitWrapped(e) {
     e.preventDefault();
     editArticle();
   }
-  function handleChange(e) {
-    setArticle({
-      ...article,
-      [e.target.name]: e.target.value,
-    });
-  }
+
   return (
-    <Form className="mx-auto" style={{ width: "500px" }} onSubmit={onSubmit}>
+    <Form
+      className="mx-auto"
+      style={{ width: "500px" }}
+      onSubmit={onSubmitWrapped}
+    >
       <h1>Edit article</h1>
       <TextInput
         label="link"
@@ -40,6 +37,7 @@ function EditArticle({ editArticle, articleId }) {
         value={article.content || ""}
         handleChange={handleChange}
       />
+      {isFail && <p className="text-danger">{errMessage}</p>}
       <SubmitButton />
     </Form>
   );
