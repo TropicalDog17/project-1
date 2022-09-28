@@ -1,26 +1,18 @@
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { SubmitButton } from "../form/SubmitButton";
 import { TextInput } from "../form/TextInput";
-import {
-  singleArticleState,
-  articleIndexAtom,
-  articleAtom,
-} from "../../state/articles";
+import { singleArticleState, articleIndexAtom } from "../../state/articles";
 import { useSetRecoilState, useRecoilValue, useRecoilState } from "recoil";
 import { useEffect, useState } from "react";
-import { replaceItemAtIndex } from "../../common/utils";
 import { useSubmitForm } from "../../hooks";
-export { EditArticleForm };
-function EditArticleForm({ articleId }) {
+export { EditArticle };
+function EditArticle({ editArticle, articleId }) {
   const setArticleIndex = useSetRecoilState(articleIndexAtom);
-
   useEffect(() => {
     setArticleIndex(articleId);
   }, []);
   const [article, setArticle] = useRecoilState(singleArticleState);
-  const { isFail, editArticle } = useSubmitForm(article);
-  function onSubmit(e) {
+  function onSubmitWrapped(e) {
     e.preventDefault();
     editArticle();
   }

@@ -1,8 +1,7 @@
 import { atom, selector } from "recoil";
 import { replaceItemAtIndex } from "../common";
 import { DEFAULT_ARTICLES_FOR_PAGIATION_TEST } from "../common";
-import articleController from "../controller/articleController";
-import { ApiSelector } from "./api";
+import { articleController } from "../controller/articleController";
 const articleAtom = atom({
   key: "article",
   // get initial state from local storage to enable user to stay logged in

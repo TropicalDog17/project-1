@@ -9,4 +9,4 @@ const articleController = {
     return response.data;
   },
 };
-export default articleController;
+export { articleController };

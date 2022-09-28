@@ -1,23 +1,12 @@
-import { useNavigate, Navigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
-import { useState, useEffect } from "react";
-import { useUserActions } from "../common";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Form from "react-bootstrap/Form";
-import { InputEmail, InputPassword, SubmitButton } from "../_components/form";
-import { authAtom } from "../state";
-
-export default function LoginPage() {
+import { InputEmail, InputPassword, SubmitButton } from "../form";
+function Login({ login, isFail }) {
   const navigate = useNavigate();
-  const auth = useRecoilValue(authAtom);
-  const { isFail, login } = useUserActions();
   const [user, setUser] = useState({ email: "", password: "" });
-  useEffect(() => {
-    if (auth) {
-      navigate("/");
-    }
-  }, []);
 
-  function onSubmit(e) {
+  function onSubmitWrapped(e) {
     e.preventDefault();
     login(user.email, user.password);
   }
@@ -31,7 +20,7 @@ export default function LoginPage() {
     <Form
       className="mx-auto"
       style={{ width: "500px" }}
-      onSubmit={onSubmit}
+      onSubmit={onSubmitWrapped}
       noValidate
     >
       <InputEmail handleChange={handleChange} value={user.email} />
@@ -43,4 +32,4 @@ export default function LoginPage() {
     </Form>
   );
 }
-export { LoginPage };
+export { Login };
