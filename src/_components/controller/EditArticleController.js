@@ -7,6 +7,7 @@ import * as yup from "yup";
 import axios from "axios";
 import { useRecoilState, useSetRecoilState, useRecoilValue } from "recoil";
 import { articleIndexAtom, authAtom, singleArticleState } from "../../state";
+import { getArticle } from "../../common/utils";
 function EditArticleController() {
   let { articleId } = useParams();
   let navigate = useNavigate();
@@ -14,19 +15,12 @@ function EditArticleController() {
   const [isFail, setIsFail] = useState(false);
   const [article, setArticle] = useState({ link: "", title: "", content: "" });
   const [errMessage, setErrMessage] = useState("");
-  async function getArticle() {
-    try {
-      let response = await axios.get(
-        `http://localhost:5000/articles/${articleId}`,
-        { headers: { Authorizaton: `Bearer ${authToken}` } }
-      );
-      return setArticle(response.data);
-    } catch (err) {
-      console.log(err);
-    }
-  }
   useEffect(() => {
-    getArticle();
+    async function fetchAPIData() {
+      const data = await getArticle(articleId, authToken);
+      setArticle(data);
+    }
+    fetchAPIData();
   }, []);
   function handleChange(e) {
     setArticle({

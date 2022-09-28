@@ -5,7 +5,6 @@ export default function HomePage() {
   return (
     <React.Fragment>
       <ArticleGrid />
-      <PaginationComponent />
     </React.Fragment>
   );
 }
