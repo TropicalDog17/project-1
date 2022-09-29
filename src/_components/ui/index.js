@@ -8,3 +8,4 @@ export * from "./DeleteModal";
 export * from "./PaginationItemList";
 export * from "./LogoutButton";
 export * from "./LoginButton";
+export * from "./ErrorModal";

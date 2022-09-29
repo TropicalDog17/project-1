@@ -6,6 +6,7 @@ import { articleAtom } from "../../state/articles";
 import { DeleteModal } from "../ui/DeleteModal";
 import React, { useState } from "react";
 import { currentPageIndexSelector } from "../../state";
+import { ErrorModal } from "../ui";
 
 export { ArticleGrid };
 function ArticleGrid({
@@ -13,8 +14,10 @@ function ArticleGrid({
   isModalOpen,
   handleClose,
   handleDelete,
+  articles,
+  isFail,
+  handleErrorClose,
 }) {
-  const [articles, setArticles] = useRecoilState(articleAtom);
   const currentPageIndex = useRecoilValue(currentPageIndexSelector);
   return (
     <React.Fragment>
@@ -25,13 +28,16 @@ function ArticleGrid({
           handleDelete={handleDelete}
         />
       )}
+      {isFail && (
+        <ErrorModal isModalOpen={isFail} handleClose={handleErrorClose} on />
+      )}
       <Row xs={2} md={5} className="g-3 m-2">
         {currentPageIndex.map((idx) => (
           <Col key={idx}>
             <Article
               articleId={articles[idx].id}
               {...articles[idx]}
-              onDeleteClick={onDeleteClick}
+              onDeleteClick={() => onDeleteClick(articles[idx].id)}
             />
           </Col>
         ))}
