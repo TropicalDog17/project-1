@@ -19,8 +19,8 @@ function DeleteModal({ isModalOpen, handleClose, handleDelete }) {
         <Button variant="secondary" onClick={handleClose}>
           Close
         </Button>
-        <Button variant="primary" onClick={handleDelete}>
-          Save changes
+        <Button variant="danger" onClick={handleDelete}>
+          Delete
         </Button>
       </Modal.Footer>
     </Modal>
