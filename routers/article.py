@@ -15,8 +15,12 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 router = APIRouter()
 
 
-@router.get("/articles/{article_id}", response_model=schemas.Article, tags=["article"])
-def get_article(article_id: int, db: Session = Depends(get_db)):
+@router.get("/articles/{article_id}", tags=["article"])
+def get_article(article_id: int, response: Response, db: Session = Depends(get_db)):
+    article = crud.article.get_article(db, article_id=article_id)
+    if not article:
+        response.status_code = status.HTTP_404_NOT_FOUND
+        return {"message": "Article not found"}
     return crud.article.get_article(db, article_id=article_id)
 
 
@@ -33,7 +37,8 @@ def create_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)
 
 @router.put("/articles/{article_id}", response_model=schemas.Article, tags=["article"],
             responses={404: {"model": schemas.Message}})
-def update_article(article_id: int, article: schemas.ArticleUpdate, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)):
+def update_article(article_id: int, article: schemas.ArticleUpdate, db: Session = Depends(get_db),
+                   token: str = Depends(oauth2_scheme)):
     article_db = db.query(models.Article).filter(models.Article.id == article_id).first()
     if not article_db:
         return JSONResponse(status_code=404, content={"message": "Item not found"})

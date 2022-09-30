@@ -5,7 +5,10 @@ import schemas
 
 
 def get_article(db: Session, article_id: int):
-    return db.query(models.Article).filter(models.Article.id == article_id).first()
+    article = db.query(models.Article).filter(models.Article.id == article_id).first()
+    if article:
+        return article
+    return None
 
 
 def get_articles(db: Session, skip: int = 0, limit: int = 100):
