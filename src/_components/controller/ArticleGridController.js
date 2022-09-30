@@ -12,6 +12,7 @@ function ArticleGridController() {
   const authToken = useRecoilValue(authAtom);
   const [articles, setArticles] = useRecoilState(articleAtom);
   const [isFail, setIsFail] = useState(false);
+  useEffect(() => {}, [authToken]);
   return (
     <React.Fragment>
       <ArticleGrid

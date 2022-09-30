@@ -2,7 +2,7 @@ import * as React from "react";
 import { Nav } from "react-bootstrap";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../../state";
-import { LogoutButton, LoginButton } from "./";
+import { LogoutButton, LoginButton, RegisterButton } from "./";
 export default function Navbar() {
   const isAuth = useRecoilValue(authAtom);
 
@@ -26,7 +26,10 @@ export default function Navbar() {
           Add Article
         </Nav.Link>
       </Nav.Item>
-      {!isAuth ? <LoginButton /> : <LogoutButton />}
+      <div className="d-flex">
+        {!isAuth && <RegisterButton />}
+        {!isAuth ? <LoginButton /> : <LogoutButton />}
+      </div>
     </Nav>
   );
 }

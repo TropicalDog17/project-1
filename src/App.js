@@ -10,6 +10,7 @@ import {
   ViewArticleController,
   ArticleGridController,
   AddArticleController,
+  RegisterController,
 } from "./_components/controller";
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
       <Route element={<HomeLayout />}>
         <Route path="/" element={<ArticleGridController />} />
         <Route path="/login" element={<LoginController />} />
+        <Route path="/register" element={<RegisterController />} />
         <Route path="/article/:articleId" element={<ViewArticleController />} />
         {/* <Route path="/profile" element={<ProfilePage />}/> */}
       </Route>
