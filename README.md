@@ -1,8 +1,8 @@
 # Bài tập 6
 
-# Viết giao diện cho API sử dụng React 18
+# Viết giao diện cho API
 
-## Hiện tại đang sử dụng localStorage như là DB cho ứng dụng, sẽ tích hợp API trong tương lai
+Công nghệ sử dụng: React 18, React Router v6
 
 Clone project
 
