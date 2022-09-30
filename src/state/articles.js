@@ -1,8 +1,10 @@
 import { atom, selector } from "recoil";
 import { replaceItemAtIndex } from "../common";
-import { DEFAULT_ARTICLES_FOR_PAGIATION_TEST } from "../common";
-import { articleController } from "../controller/articleController";
 import axios from "axios";
+const axios_config = {
+  baseURL: "http://localhost:5000",
+  headers: { crossorigin: true },
+};
 const articleAtom = atom({
   key: "article",
   // get initial state from local storage to enable user to stay logged in
@@ -10,7 +12,8 @@ const articleAtom = atom({
   default: selector({
     key: "articleLoader",
     get: async () => {
-      return await articleController.getAll();
+      const response = await axios.get("/articles", axios_config);
+      return response.data;
     },
   }),
 });

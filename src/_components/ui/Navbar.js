@@ -1,10 +1,7 @@
 import * as React from "react";
 import { Nav } from "react-bootstrap";
-import Alert from "react-bootstrap/Alert";
-import Button from "react-bootstrap/Button";
 import { useRecoilValue } from "recoil";
 import { authAtom } from "../../state";
-import { useUserActions } from "../../common/userActions";
 import { LogoutButton, LoginButton } from "./";
 export default function Navbar() {
   const isAuth = useRecoilValue(authAtom);

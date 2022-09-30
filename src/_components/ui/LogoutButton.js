@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Nav } from "react-bootstrap";
-import { useUserActions } from "../../common/userActions";
+import { useLogout } from "../../hooks";
 export { LogoutButton };
 function LogoutButton() {
-  const { logout } = useUserActions();
+  const logout = useLogout();
   return (
     <Nav.Item as="li" className="" onClick={logout}>
       <Nav.Link

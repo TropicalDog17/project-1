@@ -3,3 +3,4 @@ export * from "./EditArticle";
 export * from "./ViewArticle";
 export * from "./ArticleCard";
 export * from "./ArticleGrid";
+export * from "./AddArticle";

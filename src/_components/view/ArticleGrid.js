@@ -31,7 +31,7 @@ function ArticleGrid({
       {isFail && (
         <ErrorModal isModalOpen={isFail} handleClose={handleErrorClose} on />
       )}
-      <Row xs={2} md={5} className="g-3 m-2">
+      <Row xs={2} md={3} lg={4} xl={5} className="g-3 m-2">
         {currentPageIndex.map((idx) => (
           <Col key={idx}>
             <Article

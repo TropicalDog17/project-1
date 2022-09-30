@@ -47,7 +47,7 @@ function ArticleGridController() {
       console.log(authToken);
 
       const response = await axios.delete(
-        `http://localhost:5010/articles/${articleId}`,
+        `http://localhost:5000/articles/${articleId}`,
         { headers: { Authorization: `Bearer ${authToken}` } }
       );
       setArticles(articles.filter((article) => article.id !== articleId));
