@@ -1,14 +1,14 @@
-# Bài tập 6
+# Trần Anh Tuấn 20204701
 
-# Viết giao diện cho API
+# Frontend
 
 Công nghệ sử dụng: React 18, React Router v6
 
 Clone project
 
-    git clone git@gitlab.com:tuantran_1702/training_exercise.git
-    cd training_exercise
-    git checkout bt6
+    git clone git@github.com:TropicalDog17/project-1.git
+    cd project-1
+    git checkout frontend
 
 Cài đặt các package cần thiết:
 
