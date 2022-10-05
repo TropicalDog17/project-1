@@ -65,7 +65,7 @@ def create_access_token(data: dict, expires_delta: Union[timedelta, None] = None
 
 
 def authenticate_user(db: Session, email: str, password: str):
-    user = get_user(email)
+    user = get_user(email, db)
     if not user:
         return False
     if not verify_password(password, user.hashed_password):

@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from routers import article, search, user
 import uvicorn
 from fastapi.security import OAuth2PasswordBearer
-from fastapi.middleware.cors import CORSMiddleware
+from  starlette.middleware.cors import CORSMiddleware
 from dependencies import get_password_hash
 
 app = FastAPI()
