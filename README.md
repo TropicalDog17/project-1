@@ -1,16 +1,16 @@
 
-# Bài tập 3
+# Crawler
 
 ## Cài đặt
 
 clone về máy 
 
     git clone git@gitlab.com:tuantran_1702/training_exercise.git
-    git checkout bt3
+    git checkout crawler
 
 Tạo và kích hoạt môi trường ảo
 
-    cd bt3
+    cd crawler
     python3 -m venv env
     source env/bin/activate/
 
